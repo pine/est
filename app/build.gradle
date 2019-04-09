@@ -1,0 +1,15 @@
+apply plugin: 'thorntail'
+apply plugin: 'war'
+
+dependencies {
+    // Java EE
+    compileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
+    testCompileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
+
+    // Thorntail
+    implementation enforcedPlatform("io.thorntail:bom-all:${rootProject.thorntailVersion}")
+    implementation 'io.thorntail:jaxrs'
+    implementation 'io.thorntail:logging'
+}
+
+
