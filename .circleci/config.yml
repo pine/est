@@ -38,5 +38,5 @@ jobs:
               ./.circleci/setup-retry.sh
               retry -- heroku plugins:install java
               retry -- heroku deploy:jar \
-                --jar app/build/libs/app.jar --jdk 11 --app $HEROKU_APP
+                --jar app-thorntail.jar --jdk 11 --app $HEROKU_APP
             fi
