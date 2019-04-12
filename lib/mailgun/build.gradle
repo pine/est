@@ -1,0 +1,5 @@
+dependencies {
+    // Thorntail
+    compileOnly 'io.thorntail:cdi'
+    testImplementation 'io.thorntail:cdi'
+}

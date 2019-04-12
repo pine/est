@@ -2,12 +2,18 @@ apply plugin: 'thorntail'
 apply plugin: 'war'
 
 dependencies {
+    // Sub-projects
+    implementation project(':lib-filter')
+    implementation project(':lib-filter-impl-me')
+    implementation project(':lib-mailgun')
+    implementation project(':lib-slack')
+
     // Java EE
     compileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
     testCompileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
 
     // Thorntail
-    implementation enforcedPlatform("io.thorntail:bom-all:${rootProject.thorntailVersion}")
+    implementation 'io.thorntail:cdi'
     implementation 'io.thorntail:jaxrs'
     implementation 'io.thorntail:logging'
 }

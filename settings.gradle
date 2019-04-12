@@ -1,1 +1,13 @@
 include ':app'
+
+include ':lib-filter'
+project(':lib-filter').projectDir = new File(settingsDir, 'lib/filter')
+
+include ':lib-filter-impl-me'
+project(':lib-filter-impl-me').projectDir = new File(settingsDir, 'lib/filter-impl-me')
+
+include ':lib-mailgun'
+project(':lib-mailgun').projectDir = new File(settingsDir, 'lib/mailgun')
+
+include ':lib-slack'
+project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')

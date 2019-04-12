@@ -1,0 +1,11 @@
+apply plugin: 'java-library'
+
+dependencies {
+    // Sub-projects
+    api project(':lib-mailgun')
+
+    // Thorntail
+    compileOnly 'io.thorntail:jaxrs'
+    compileOnly 'io.thorntail:cdi'
+    testImplementation 'io.thorntail:cdi'
+}
