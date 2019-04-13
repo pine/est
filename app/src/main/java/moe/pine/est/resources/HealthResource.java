@@ -1,6 +1,7 @@
 package moe.pine.est.resources;
 
 import lombok.extern.jbosslog.JBossLog;
+import moe.pine.est.filters.Cache;
 import moe.pine.est.filters.NoCache;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,8 +23,9 @@ public class HealthResource {
     private ServletContext servletContext;
 
     @GET
+    @Cache(maxAge = 60 * 60 * 24)
     public Response home() {
-        final String siteUrl = servletContext.getInitParameter("app.site-urlx");
+        final String siteUrl = servletContext.getInitParameter("app.site-url");
         if (StringUtils.isEmpty(siteUrl)) {
             return Response.status(NOT_FOUND).build();
         }
