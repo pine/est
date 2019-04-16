@@ -16,6 +16,7 @@ dependencies {
     implementation 'io.thorntail:cdi'
     implementation 'io.thorntail:jaxrs'
     implementation 'io.thorntail:logging'
+    testImplementation 'io.thorntail:arquillian'
 
     // Utilities
     implementation "org.apache.commons:commons-collections4:${rootProject.commonsCollectionsVersion}"
