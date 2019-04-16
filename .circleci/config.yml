@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Test
           command: |
-            ./gradlew check
+            ./gradlew clean test
       - run:
           name: Build
           command: |
