@@ -1,3 +1,6 @@
 [submodule "filters"]
 	path = filters
 	url = git@github.com:pine/est-filters.git
+[submodule "conf"]
+	path = conf
+	url = git@github.com:pine/est-conf.git
