@@ -1,7 +1,0 @@
-dependencies {
-    // Sub-projects
-    implementation project(':lib-filter')
-
-    // Thorntail
-    compileOnly 'io.thorntail:cdi'
-}
