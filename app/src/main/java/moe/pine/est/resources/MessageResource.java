@@ -31,15 +31,16 @@ public class MessageResource {
         @FormParam("stripped-signature") final String strippedSignature,
         @FormParam("body-html") final String bodyHtml,
         @FormParam("stripped-html") final String strippedHtml,
-        @FormParam("timestamp") final String timestamp,
+        @FormParam("timestamp") final long timestamp,
         @FormParam("token") final String token,
         @FormParam("signature") final String signature,
         @FormParam("message-headers") final String messageHeaders
     ) {
         log.infov(
             "Message received :: " +
-                "recipient=\"{0}\", sender=\"{1}\", from=\"{2}\", subject=\"{3}\"",
-            recipient, sender, from, subject);
+                "recipient=\"{0}\", sender=\"{1}\", from=\"{2}\", " +
+                "timestamp=\"{3}\", token=\"{4}\", signature=\"{5}\", message-headers=\"{6}\"",
+            recipient, sender, from, timestamp, token, signature, messageHeaders);
 
         // filterGroup.doFilter(Message.builder().build());
 
