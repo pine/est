@@ -37,9 +37,9 @@ public class MessageResource {
         @FormParam("message-headers") final String messageHeaders
     ) {
         log.infov(
-            "Message received :: recipient=\"{0}\", sender=\"{1}\", from=\"{2}\", subject=\"{3}\"",
+            "Message received :: " +
+                "recipient=\"{0}\", sender=\"{1}\", from=\"{2}\", subject=\"{3}\"",
             recipient, sender, from, subject);
-        log.infov("{0}", bodyPlain);
 
         // filterGroup.doFilter(Message.builder().build());
 
