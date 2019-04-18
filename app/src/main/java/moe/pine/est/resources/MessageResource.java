@@ -7,15 +7,10 @@ import moe.pine.est.mailgun.MessageRequest;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @Path("/api/messages")
 @Dependent
@@ -29,27 +24,14 @@ public class MessageResource {
 
     @POST
     public String receive(
-        InputStream requestBody
-    ) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
-        StringBuilder out = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            out.append(line);
-        }
-        System.out.println(out.toString());   //Prints the string content read from input stream
-        reader.close();
-
-        /*
+        @BeanParam final MessageRequest messageRequest
+    ) {
         log.infov(
             "Message received :: " +
                 "recipient=\"{0}\", sender=\"{1}\", from=\"{2}\"",
             messageRequest.getRecipient(),
             messageRequest.getSender(),
             messageRequest.getFrom());
-
-        log.infov(request.rea);
-        */
 
 //        mailgun.receive()
 
