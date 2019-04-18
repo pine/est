@@ -7,5 +7,13 @@ $ ./gradlew clean :app:thorntail-package
 $ java -jar app/build/libs/app-thorntail.jar
 ```
 
+## Deployment
+
+```
+$ heroku config:set "JAVA_OPTS=-XX:+UseStringDeduplication"
+$ heroku config:set LANG=en_US.UTF-8
+$ heroku config:set TZ=Asia/Tokyo
+```
+
 ## License
 MIT &copy; [Pine Mizune](https://profile.pine.moe)
