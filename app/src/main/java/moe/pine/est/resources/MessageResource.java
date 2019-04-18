@@ -26,7 +26,15 @@ public class MessageResource {
         @FormParam("sender") final String sender,
         @FormParam("from") final String from,
         @FormParam("subject") final String subject,
-        @FormParam("body-plain") final String bodyPlain
+        @FormParam("body-plain") final String bodyPlain,
+        @FormParam("stripped-text") final String strippedText,
+        @FormParam("stripped-signature") final String strippedSignature,
+        @FormParam("body-html") final String bodyHtml,
+        @FormParam("stripped-html") final String strippedHtml,
+        @FormParam("timestamp") final String timestamp,
+        @FormParam("token") final String token,
+        @FormParam("signature") final String signature,
+        @FormParam("message-headers") final String messageHeaders
     ) {
         log.infov(
             "Message received :: recipient=\"{0}\", sender=\"{1}\", from=\"{2}\", subject=\"{3}\"",
