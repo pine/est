@@ -19,6 +19,13 @@ public class Mailgun {
             .from(messageRequest.getFrom())
             .subject(messageRequest.getSubject())
             .bodyPlain(messageRequest.getBodyPlain())
+            .strippedText(messageRequest.getStrippedText())
+            .strippedSignature(messageRequest.getStrippedSignature())
+            .bodyHtml(messageRequest.getBodyHtml())
+            .strippedHtml(messageRequest.getStrippedHtml())
+            .timestamp(messageRequest.getTimestamp())
+            .token(messageRequest.getToken())
+            .signature(messageRequest.getSignature())
             .headers(new MessageHeaders())
             .build();
     }

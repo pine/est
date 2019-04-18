@@ -31,6 +31,7 @@ public class MessageResource {
         log.infov(
             "Message received :: from=\"{0}\", subject=\"{1}\"",
             message.getFrom(), message.getSubject());
+        log.info("あいうえお");
 
 
 //        mailgun.receive()
