@@ -1,4 +1,8 @@
 dependencies {
+    // Java EE
+    compileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
+    testCompileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
+
     // Thorntail
     compileOnly 'io.thorntail:cdi'
     testImplementation 'io.thorntail:cdi'
