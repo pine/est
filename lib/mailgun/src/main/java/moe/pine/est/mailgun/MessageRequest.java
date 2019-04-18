@@ -2,6 +2,7 @@ package moe.pine.est.mailgun;
 
 import lombok.Data;
 
+import javax.annotation.Nonnull;
 import javax.ws.rs.FormParam;
 
 @Data
@@ -27,13 +28,21 @@ public class MessageRequest {
     @FormParam("stripped-signature")
     private String strippedSignature;
 
-    /*
-    @FormParam("body-html") final String bodyHtml,
-    @FormParam("stripped-html") final String strippedHtml,
-    @FormParam("timestamp") final long timestamp,
-    @FormParam("token") final String token,
-    @FormParam("signature") final String signature,
-    @FormParam("message-headers") final String messageHeaders
+    @FormParam("body-html")
+    private String bodyHtml;
 
-     */
+    @FormParam("stripped-html")
+    private String strippedHtml;
+
+    @FormParam("timestamp")
+    private long timestamp;
+
+    @FormParam("token")
+    private String token;
+
+    @FormParam("signature")
+    private String signature;
+
+    @FormParam("message-headers")
+    private String messageHeaders;
 }
