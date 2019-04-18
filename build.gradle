@@ -2,6 +2,7 @@ buildscript {
     ext {
         commonsCollectionsVersion = '4.3'
         commonsLangVersion = '3.8.1'
+        guavaVersion = '27.1-jre'
         javaeeVersion = '8.0.1'
         thorntailVersion = '2.4.0.Final'
         lombokVersion = '1.18.6'

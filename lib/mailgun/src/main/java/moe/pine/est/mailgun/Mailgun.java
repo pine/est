@@ -1,23 +1,29 @@
 package moe.pine.est.mailgun;
 
+import javax.annotation.Nonnull;
 import javax.enterprise.context.ApplicationScoped;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @ApplicationScoped
 public class Mailgun {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public Message receive(
-            final String subject
+        @Nonnull final MessageRequest messageRequest
     ) {
+        checkNotNull(messageRequest);
+
         return Message.builder()
-                .subject(subject)
-                .headers(new MessageHeaders())
-                .build();
+            .subject(messageRequest.getSubject())
+            .headers(new MessageHeaders())
+            .build();
     }
 
     public void verify(
-            final Message message,
-            final String timestamp,
-            final String token,
-            final String signature
+        final Message message,
+        final String timestamp,
+        final String token,
+        final String signature
     ) {
     }
 }

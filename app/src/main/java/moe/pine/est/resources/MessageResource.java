@@ -8,7 +8,6 @@ import moe.pine.est.mailgun.MessageRequest;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.ws.rs.BeanParam;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -32,6 +31,8 @@ public class MessageResource {
             messageRequest.getRecipient(),
             messageRequest.getSender(),
             messageRequest.getFrom());
+
+        //mailgun.receive()
 
 //        mailgun.receive()
 
