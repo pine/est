@@ -1,22 +1,18 @@
 package moe.pine.est.mailgun;
 
 import lombok.Data;
-import org.wildfly.common.annotation.Nullable;
 
 import javax.ws.rs.FormParam;
 
 @Data
 public class MessageRequest {
     @FormParam("recipient")
-    @Nullable
     private String recipient;
 
     @FormParam("sender")
-    @Nullable
     private String sender;
 
     @FormParam("from")
-    @Nullable
     private String from;
 
     @FormParam("subject")

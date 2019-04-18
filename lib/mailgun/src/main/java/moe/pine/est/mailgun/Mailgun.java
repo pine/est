@@ -14,7 +14,11 @@ public class Mailgun {
         checkNotNull(messageRequest);
 
         return Message.builder()
+            .recipient(messageRequest.getRecipient())
+            .sender(messageRequest.getSender())
+            .from(messageRequest.getFrom())
             .subject(messageRequest.getSubject())
+            .bodyPlain(messageRequest.getBodyPlain())
             .headers(new MessageHeaders())
             .build();
     }

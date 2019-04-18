@@ -3,6 +3,7 @@ package moe.pine.est.resources;
 import lombok.extern.jbosslog.JBossLog;
 import moe.pine.est.filter.FilterGroup;
 import moe.pine.est.mailgun.Mailgun;
+import moe.pine.est.mailgun.Message;
 import moe.pine.est.mailgun.MessageRequest;
 
 import javax.enterprise.context.Dependent;
@@ -25,14 +26,12 @@ public class MessageResource {
     public String receive(
         @BeanParam final MessageRequest messageRequest
     ) {
-        log.infov(
-            "Message received :: " +
-                "recipient=\"{0}\", sender=\"{1}\", from=\"{2}\"",
-            messageRequest.getRecipient(),
-            messageRequest.getSender(),
-            messageRequest.getFrom());
+        final Message message = mailgun.receive(messageRequest);
 
-        //mailgun.receive()
+        log.infov(
+            "Message received :: from=\"{0}\", subject=\"{1}\"",
+            message.getFrom(), message.getSubject());
+
 
 //        mailgun.receive()
 
