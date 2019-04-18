@@ -22,14 +22,10 @@ public class MessageResource {
 
     @POST
     public String receive(
-        @FormParam("recipient") final String recipient,
-        @FormParam("sender") final String sender,
-        @FormParam("from") final String from,
-        @FormParam("subject") final String subject
+        @FormParam("sender") final String sender
     ) {
         log.infov(
-            "Message received :: recipient={0}, sender={1}, from={2}, subject={3}",
-            recipient, sender, from, subject);
+            "Message received :: sender={0}", sender);
 
         // filterGroup.doFilter(Message.builder().build());
 
