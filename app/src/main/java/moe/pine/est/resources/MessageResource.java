@@ -1,42 +1,35 @@
 package moe.pine.est.resources;
 
 import lombok.extern.jbosslog.JBossLog;
-import moe.pine.est.filter.FilterGroup;
-import moe.pine.est.mailgun.Mailgun;
-import moe.pine.est.mailgun.Message;
-import moe.pine.est.mailgun.MessageRequest;
+import moe.pine.est.mailgun.models.Message;
+import moe.pine.est.mailgun.models.MessageRequest;
+import moe.pine.est.processor.CompositeProcessor;
+import moe.pine.est.processor.NotifyRequest;
+import moe.pine.est.services.MailgunService;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import java.util.List;
 
 @Path("/api/messages")
 @Dependent
 @JBossLog
 public class MessageResource {
     @Inject
-    private Mailgun mailgun;
+    private MailgunService mailgunService;
 
     @Inject
-    private FilterGroup filterGroup;
+    private CompositeProcessor processor;
 
     @POST
     public String receive(
         @BeanParam final MessageRequest messageRequest
     ) {
-        final Message message = mailgun.receive(messageRequest);
-
-        log.infov(
-            "Message received :: from=\"{0}\", subject=\"{1}\"",
-            message.getFrom(), message.getSubject());
-        log.info("あいうえお");
-
-
-//        mailgun.receive()
-
-        // filterGroup.doFilter(Message.builder().build());
+        final Message message = mailgunService.receive(messageRequest);
+        final List<NotifyRequest> notifyRequests = processor.execute(message);
 
         return "OK";
     }

@@ -1,4 +1,4 @@
-package moe.pine.est.mailgun;
+package moe.pine.est.mailgun.models;
 
 import lombok.NoArgsConstructor;
 

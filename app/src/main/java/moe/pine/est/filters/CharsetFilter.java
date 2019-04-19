@@ -12,10 +12,11 @@ import java.io.IOException;
 @WebFilter("/*")
 public class CharsetFilter implements Filter {
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-
-        System.out.println("#############");
-
+    public void doFilter(
+        final ServletRequest request,
+        final ServletResponse response,
+        final FilterChain chain
+    ) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         chain.doFilter(request, response);
     }

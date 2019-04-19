@@ -1,5 +1,9 @@
 package moe.pine.est.mailgun;
 
+import moe.pine.est.mailgun.models.Message;
+import moe.pine.est.mailgun.models.MessageHeaders;
+import moe.pine.est.mailgun.models.MessageRequest;
+
 import javax.annotation.Nonnull;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -31,10 +35,7 @@ public class Mailgun {
     }
 
     public void verify(
-        final Message message,
-        final String timestamp,
-        final String token,
-        final String signature
+        final Message message
     ) {
     }
 }

@@ -3,8 +3,8 @@ include ':app'
 
 // ----- Library ------------------------------------------
 
-include ':lib-filter'
-project(':lib-filter').projectDir = new File(settingsDir, 'lib/filter')
+include ':lib-processor'
+project(':lib-processor').projectDir = new File(settingsDir, 'lib/processor')
 
 include ':lib-mailgun'
 project(':lib-mailgun').projectDir = new File(settingsDir, 'lib/mailgun')
@@ -13,8 +13,11 @@ include ':lib-slack'
 project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')
 
 
-// ----- Filters ------------------------------------------
+// ----- Processors ---------------------------------------
 
-include ':lib-filter-impl-me'
-project(':lib-filter-impl-me').projectDir = new File(settingsDir, 'filters/me')
+include ':processors-connpass'
+project(':processors-connpass').projectDir = new File(settingsDir, 'processors/connpass')
+
+include ':processors-me'
+project(':processors-me').projectDir = new File(settingsDir, 'processors/me')
 

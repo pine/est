@@ -3,8 +3,11 @@ package moe.pine.est.resources;
 import lombok.extern.jbosslog.JBossLog;
 import moe.pine.est.filters.Cache;
 import moe.pine.est.filters.NoCache;
+import moe.pine.est.properties.AppProperties;
+import moe.pine.est.properties.SlackProperties;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,10 +25,18 @@ public class HealthResource {
     @Context
     private ServletContext servletContext;
 
+    @Inject
+    private AppProperties appProperties;
+
+    @Inject
+    private SlackProperties slackProperties;
+
     @GET
     @Cache(maxAge = 60 * 60 * 24)
     public Response home() {
-        final String siteUrl = servletContext.getInitParameter("app.site-url");
+        log.info(slackProperties);
+
+        final String siteUrl = appProperties.getSiteUrl();
         if (StringUtils.isEmpty(siteUrl)) {
             return Response.status(NOT_FOUND).build();
         }

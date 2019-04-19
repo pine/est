@@ -2,3 +2,6 @@
 .idea/
 build/
 out/
+
+/app/src/main/resources/project-local.yml
+/app/src/main/resources/project-prod.yml
