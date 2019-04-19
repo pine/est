@@ -5,16 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.models.MessageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class MessageController {
     @PostMapping("/api/messages")
+    @ResponseBody
     public String create(
         final MessageRequest messageRequest
     ) {
-        log.info("New message received :: from={}, subject={}",
+        log.info("New message received :: from=\"{}\", subject=\"{}\"",
             messageRequest.getFrom(), messageRequest.getSubject());
 
         return "OK";

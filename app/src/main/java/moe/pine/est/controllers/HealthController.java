@@ -23,7 +23,9 @@ public class HealthController {
     private AppProperties appProperties;
 
     @GetMapping("/")
-    public void home(final HttpServletResponse response) throws IOException {
+    public void home(
+        @Nonnull final HttpServletResponse response
+    ) throws IOException {
         final String redirectUrl = appProperties.getSiteUrl();
         if (StringUtils.isEmpty(redirectUrl)) {
             response.sendError(NOT_FOUND.value(), NOT_FOUND.getReasonPhrase());
