@@ -1,6 +1,7 @@
 package moe.pine.est.models;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 @Data
 public class MessageRequest {
@@ -8,7 +9,10 @@ public class MessageRequest {
     private String sender;
     private String from;
     private String subject;
+
+    @Qualifier("body-plain")
     private String bodyPlain;
+
     private String strippedText;
     private String strippedSignature;
     private String bodyHtml;
