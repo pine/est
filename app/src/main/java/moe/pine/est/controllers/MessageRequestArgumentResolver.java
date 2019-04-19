@@ -1,5 +1,6 @@
-package moe.pine.est.models;
+package moe.pine.est.controllers;
 
+import moe.pine.est.models.MessageRequest;
 import moe.pine.est.processor.Message;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         return MessageRequest.builder()
             .recipient(webRequest.getParameter("recipient"))
+            .sender(webRequest.getParameter("sender"))
             .bodyPlain(webRequest.getParameter("body-plain"))
             .build();
     }
