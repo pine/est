@@ -3,9 +3,9 @@ package moe.pine.est.config;
 import lombok.RequiredArgsConstructor;
 import moe.pine.est.interceptors.CacheInterceptor;
 import moe.pine.est.interceptors.NoCacheInterceptor;
-import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
