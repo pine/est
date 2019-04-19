@@ -14,10 +14,10 @@ jobs:
           name: Checkout submodule
           command: |
             git submodule update --init
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #       - v1-dependencies-{{ checksum "build.gradle" }}
+      #       - v1-dependencies-
       - run:
           name: Test
           command: |
