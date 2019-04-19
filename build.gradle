@@ -3,16 +3,19 @@ buildscript {
         commonsCollectionsVersion = '4.3'
         commonsLangVersion = '3.8.1'
         guavaVersion = '27.1-jre'
-        javaeeVersion = '8.0.1'
-        thorntailVersion = '2.4.0.Final'
+        springBootVersion = '2.1.3.RELEASE'
         lombokVersion = '1.18.6'
     }
     repositories {
         jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
     dependencies {
-        classpath "io.thorntail:thorntail-gradle-plugin:$thorntailVersion"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE'
+        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.11'
+        classpath 'net.rdrei.android.buildtimetracker:gradle-plugin:0.11.0'
     }
 }
 
@@ -21,23 +24,85 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
 
+    group 'moe.pine.est'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
     repositories {
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url 'http://repository.jboss.org/nexus/content/groups/public/' }
     }
-    dependencies {
-        // BOM
-        implementation enforcedPlatform("io.thorntail:bom-all:$thorntailVersion")
 
-         // Lombok
-        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-        compileOnly "org.projectlombok:lombok:$lombokVersion"
-        testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
-        testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+
+    // ----- JaCoCo ---------------------------------------
+
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = '0.8.3'
+    }
+    // dependencies {
+    //     // BOM
+    //     implementation enforcedPlatform("io.thorntail:bom-all:$thorntailVersion")
+
+    //      // Lombok
+    //     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    //     compileOnly "org.projectlombok:lombok:$lombokVersion"
+    //     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    //     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+
+    //     // Utilities
+    //     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    // }
+}
+
+subprojects {
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+            mavenBom 'com.google.cloud:google-cloud-bom:0.82.0-alpha'
+        }
+        dependencies {
+            dependency 'javax.servlet:javax.servlet-api:4.0.1'
+            dependency "org.projectlombok:lombok:$lombokVersion"
+
+            // Guava
+            dependency "com.google.guava:guava:$guavaVersion"
+
+            // Apache Commons
+            dependency "org.apache.commons:commons-lang3:$commonsLangVersion"
+            dependency "org.apache.commons:commons-collections4:$commonsCollectionsVersion"
+
+            // Test
+            dependency 'junit:junit:4.12'
+            dependency 'org.mockito:mockito-core:2.24.5'
+            dependency 'org.powermock:powermock-reflect:2.0.0'
+        }
+    }
+    dependencies {
+        // Lombok
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+
+        // Logging
+        implementation 'org.slf4j:slf4j-api'
+        implementation 'ch.qos.logback:logback-classic'
 
         // Utilities
-        implementation 'com.google.code.findbugs:jsr305:3.0.2'
+        implementation 'com.google.guava:guava'
+        implementation 'org.apache.commons:commons-lang3'
+        implementation 'org.apache.commons:commons-collections4'
+
+        // Test
+        testImplementation 'junit:junit'
+        testImplementation 'org.mockito:mockito-core'
+        testImplementation 'org.powermock:powermock-reflect'
     }
 }
 

@@ -1,26 +1,9 @@
-apply plugin: 'thorntail'
-apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
 
 dependencies {
-    // Sub-projects
-    implementation project(':lib-processor')
-    implementation project(':lib-mailgun')
-    implementation project(':lib-slack')
-    implementation project(':processors-me')
+    // Spring Framework
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // Java EE
-    compileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
-    testCompileOnly "javax:javaee-api:${rootProject.javaeeVersion}"
-
-    // Thorntail
-    implementation 'io.thorntail:cdi'
-    implementation 'io.thorntail:jaxrs'
-    implementation 'io.thorntail:logging'
-    implementation 'io.thorntail:bean-validation'
-    testImplementation 'io.thorntail:arquillian'
-
-    // Utilities
-    implementation "org.apache.commons:commons-collections4:${rootProject.commonsCollectionsVersion}"
-    implementation "org.apache.commons:commons-lang3:${rootProject.commonsLangVersion}"
-    
+    compileOnly 'javax.servlet:javax.servlet-api'
 }
