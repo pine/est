@@ -1,2 +1,10 @@
+spring:
+  profiles:
+    active: local
+  output:
+    ansi:
+      enabled: always
+
+
 app:
   site-url: https://github.com/pine/est
