@@ -1,8 +1,6 @@
 package moe.pine.est.processor;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import moe.pine.est.mailgun.models.Message;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.Nonnull;
@@ -11,10 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class CompositeProcessor implements Processor {
-    private List<Processor> processors;
+    private final List<Processor> processors;
 
     @Nonnull
     @Override

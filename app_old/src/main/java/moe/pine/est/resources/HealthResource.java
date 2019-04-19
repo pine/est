@@ -1,8 +1,8 @@
 package moe.pine.est.resources;
 
 import lombok.extern.jbosslog.JBossLog;
-import moe.pine.est.filters.Cache;
-import moe.pine.est.filters.NoCache;
+import moe.pine.est.interceptors.Cache;
+import moe.pine.est.interceptors.NoCache;
 import moe.pine.est.properties.AppProperties;
 import moe.pine.est.properties.SlackProperties;
 import org.apache.commons.lang3.StringUtils;
