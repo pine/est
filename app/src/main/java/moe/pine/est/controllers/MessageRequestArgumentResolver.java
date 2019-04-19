@@ -1,7 +1,6 @@
 package moe.pine.est.controllers;
 
 import moe.pine.est.models.MessageRequest;
-import moe.pine.est.processor.Message;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -13,7 +12,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class MessageRequestArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(Message.class);
+        return parameter.getParameterType().equals(MessageRequest.class);
     }
 
     @Override
