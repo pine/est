@@ -35,6 +35,7 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
             .recipient(webRequest.getParameter("recipient"))
             .sender(webRequest.getParameter("sender"))
             .from(webRequest.getParameter("from"))
+            .subject(webRequest.getParameter("subject"))
             .bodyPlain(webRequest.getParameter("body-plain"))
             .strippedText(webRequest.getParameter("stripped-text"))
             .strippedSignature(webRequest.getParameter("stripped-signature"))
