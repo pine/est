@@ -14,7 +14,9 @@ public class MessageController {
     public String create(
         final MessageRequest messageRequest
     ) {
-        log.info("message={}", messageRequest);
+        log.info("New message received :: from={}, subject={}",
+            messageRequest.getFrom(), messageRequest.getSubject());
+
         return "OK";
     }
 }

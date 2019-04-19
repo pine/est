@@ -19,7 +19,7 @@ public class MessageRequest {
     private String strippedSignature;
     private String bodyHtml;
     private String strippedHtml;
-    private long timestamp;
+    private Long timestamp;
     private String token;
     private String signature;
     private String messageHeaders;
