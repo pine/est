@@ -6,6 +6,7 @@ configurations {
 
 dependencies {
     // Sub-projects
+    implementation project(':lib-message')
     implementation project(':lib-processor')
 
     // Spring Framework

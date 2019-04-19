@@ -6,8 +6,8 @@ include ':app'
 include ':lib-processor'
 project(':lib-processor').projectDir = new File(settingsDir, 'lib/processor')
 
-// include ':lib-mailgun'
-// project(':lib-mailgun').projectDir = new File(settingsDir, 'lib/mailgun')
+include ':lib-message'
+project(':lib-message').projectDir = new File(settingsDir, 'lib/message')
 
 // include ':lib-slack'
 // project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')

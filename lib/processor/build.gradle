@@ -1,2 +1,4 @@
 dependencies {
+    // Sub-projects
+    implementation project(':lib-message')
 }

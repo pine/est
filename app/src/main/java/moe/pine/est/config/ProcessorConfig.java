@@ -31,20 +31,4 @@ public class ProcessorConfig {
         return compositeProcessor;
 
     }
-    /*
-        @Produces
-    @ApplicationScoped
-    public CompositeProcessor getCompositeProcessor(
-        @Any Instance<Processor> instance
-    ) {
-        final var filters = IterableUtils.toList(
-            instance.select(new AnnotationLiteral<ProcessorEnabled>() {
-            }));
-        final var compositeProcessor = new CompositeProcessor();
-        compositeProcessor.setProcessors(filters);
-
-
-        return compositeProcessor;
-    }
-     */
 }
