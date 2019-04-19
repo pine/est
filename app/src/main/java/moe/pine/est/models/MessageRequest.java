@@ -1,7 +1,7 @@
 package moe.pine.est.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @Data
 public class MessageRequest {
@@ -10,7 +10,7 @@ public class MessageRequest {
     private String from;
     private String subject;
 
-    @Qualifier("body-plain")
+    @JsonProperty("body-plain")
     private String bodyPlain;
 
     private String strippedText;
