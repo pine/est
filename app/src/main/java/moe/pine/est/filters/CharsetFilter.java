@@ -15,6 +15,7 @@ public class CharsetFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         final var headers = requestContext.getHeaders();
         final var contentType = headers.getFirst("content-type");
+        log.infov("content-type={0}", contentType);
 
         if (StringUtils.isEmpty(contentType)) {
             return;
