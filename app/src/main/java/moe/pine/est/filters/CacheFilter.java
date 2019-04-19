@@ -12,7 +12,6 @@ import java.util.Locale;
 
 import static javax.ws.rs.core.Response.Status.OK;
 
-
 @Provider
 @Cache
 public class CacheFilter implements ContainerResponseFilter {

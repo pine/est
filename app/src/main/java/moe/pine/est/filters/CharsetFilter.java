@@ -1,29 +1,22 @@
 package moe.pine.est.filters;
 
-import lombok.extern.jbosslog.JBossLog;
-import org.apache.commons.lang3.StringUtils;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.ext.Provider;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@Provider
-@JBossLog
-public class CharsetFilter implements ContainerRequestFilter {
+@WebFilter("/*")
+public class CharsetFilter implements Filter {
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
-        final var headers = requestContext.getHeaders();
-        final var contentType = headers.getFirst("content-type");
-        log.infov("content-type={0}", contentType);
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        if (StringUtils.isEmpty(contentType)) {
-            return;
-        }
-        if (contentType.contains("charset=")) {
-            return;
-        }
+        System.out.println("#############");
 
-        headers.putSingle("content-type", contentType + "; charset=utf-8");
+        request.setCharacterEncoding("UTF-8");
+        chain.doFilter(request, response);
     }
 }
