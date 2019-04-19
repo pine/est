@@ -16,6 +16,6 @@ public class MessageController {
         @RequestBody final MessageRequest messageRequest
     ) {
         log.info("message={}", messageRequest);
-
+        return "OK";
     }
 }
