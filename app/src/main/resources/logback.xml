@@ -12,7 +12,7 @@
     <!-- Spring -->
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.springframework.boot.context.config.ConfigFileApplicationListener" level="DEBUG"/>
-    
+
     <!-- Undertow -->
     <logger name="org.xnio" level="WARN"/>
     <logger name="io.undertow.session" level="WARN"/>

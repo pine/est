@@ -2,6 +2,7 @@ package moe.pine.est.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.properties.AppProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -16,19 +17,21 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class HealthController {
     @Nonnull
     private AppProperties appProperties;
 
     @GetMapping("/")
     public void home(final HttpServletResponse response) throws IOException {
-        final String siteUrl = appProperties.getSiteUrl();
-        if (StringUtils.isEmpty(siteUrl)) {
+        final String redirectUrl = appProperties.getSiteUrl();
+        if (StringUtils.isEmpty(redirectUrl)) {
             response.sendError(NOT_FOUND.value(), NOT_FOUND.getReasonPhrase());
             return;
         }
 
-        response.sendRedirect(siteUrl);
+        log.debug("Redirected :: redirect-url={}", redirectUrl);
+        response.sendRedirect(redirectUrl);
     }
 
     @GetMapping("/health")
