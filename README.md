@@ -9,9 +9,14 @@ $ ./gradlew :app:bootJar
 ## Deployment
 
 ```bash
+# Setup environment variables
 $ heroku config:set "JAVA_OPTS=-XX:+UseStringDeduplication"
 $ heroku config:set "SPRING_PROFILES_ACTIVE=prod"
 $ heroku config:set "TZ=Asia/Tokyo"
+
+# Setup Redis
+$ heroku addons:create heroku-redis:hobby-dev
+$ heroku config | fgrep REDIS_URL
 ```
 
 ## License

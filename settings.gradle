@@ -3,17 +3,20 @@ include ':app'
 
 // ----- Library ------------------------------------------
 
-include ':lib-processor'
-project(':lib-processor').projectDir = new File(settingsDir, 'lib/processor')
-
 include ':lib-email'
 project(':lib-email').projectDir = new File(settingsDir, 'lib/email')
+
+include ':lib-log'
+project(':lib-log').projectDir = new File(settingsDir, 'lib/log')
+
+include ':lib-processor'
+project(':lib-processor').projectDir = new File(settingsDir, 'lib/processor')
 
 include ':lib-slack'
 project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')
 
 
-// // ----- Processors ---------------------------------------
+// ----- Processors ---------------------------------------
 
 include ':processors-connpass'
 project(':processors-connpass').projectDir = new File(settingsDir, 'processors/connpass')

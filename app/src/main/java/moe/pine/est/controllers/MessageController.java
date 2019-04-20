@@ -7,6 +7,7 @@ import moe.pine.est.email.models.EmailMessage;
 import moe.pine.est.models.MessageRequest;
 import moe.pine.est.processor.NotifyRequest;
 import moe.pine.est.services.EmailService;
+import moe.pine.est.services.LogService;
 import moe.pine.est.services.ProcessorService;
 import moe.pine.est.services.SlackService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -35,6 +36,9 @@ public class MessageController {
     @Nonnull
     private SlackService slackService;
 
+    @Nonnull
+    private LogService logService;
+
     @PostMapping("/api/messages")
     public void create(
         @Nonnull final MessageRequest messageRequest,
@@ -45,15 +49,15 @@ public class MessageController {
             messageRequest.getFrom(),
             messageRequest.getSubject());
 
-        final EmailMessage emailMessage = emailService.newMessage(messageRequest);
+        final EmailMessage message = emailService.newMessage(messageRequest);
         try {
-            emailService.verify(emailMessage);
+            emailService.verify(message);
         } catch (final InvalidSignatureException e) {
             response.sendError(BAD_REQUEST.value(), BAD_REQUEST.getReasonPhrase());
             return;
         }
 
-        final List<NotifyRequest> notifyRequests = processorService.execute(emailMessage);
+        final List<NotifyRequest> notifyRequests = processorService.execute(message);
         if (CollectionUtils.isNotEmpty(notifyRequests)) {
             log.info("New notify requests created :: {}", notifyRequests);
         }
@@ -63,6 +67,7 @@ public class MessageController {
             .map(slackService::newMessage)
             .forEach(slackService::postMessage);
 
+        logService.log(message, notifyRequests);
         response.getWriter().write(OK.getReasonPhrase());
     }
 }

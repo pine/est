@@ -7,13 +7,18 @@ configurations {
 dependencies {
     // Sub-projects
     implementation project(':lib-email')
+    implementation project(':lib-log')
     implementation project(':lib-processor')
     implementation project(':lib-slack')
 
     // Spring Framework
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compileOnly 'javax.servlet:javax.servlet-api'
+
+    // Redis
+    implementation 'io.lettuce:lettuce-core'
 }
