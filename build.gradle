@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        commonsCodecVersion = '1.12'
         commonsCollectionsVersion = '4.3'
         commonsLangVersion = '3.8.1'
         guavaVersion = '27.1-jre'
@@ -43,19 +44,6 @@ allprojects {
     jacoco {
         toolVersion = '0.8.3'
     }
-    // dependencies {
-    //     // BOM
-    //     implementation enforcedPlatform("io.thorntail:bom-all:$thorntailVersion")
-
-    //      // Lombok
-    //     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-    //     compileOnly "org.projectlombok:lombok:$lombokVersion"
-    //     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
-    //     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-
-    //     // Utilities
-    //     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    // }
 }
 
 subprojects {
@@ -76,6 +64,8 @@ subprojects {
             // Apache Commons
             dependency "org.apache.commons:commons-lang3:$commonsLangVersion"
             dependency "org.apache.commons:commons-collections4:$commonsCollectionsVersion"
+            dependency "commons-codec:commons-codec:$commonsCodecVersion"
+
 
             // Test
             dependency 'junit:junit:4.12'

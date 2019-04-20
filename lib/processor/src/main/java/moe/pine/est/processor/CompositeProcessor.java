@@ -1,6 +1,7 @@
 package moe.pine.est.processor;
 
 import lombok.RequiredArgsConstructor;
+import moe.pine.est.mailgun.models.Message;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.Nonnull;
@@ -15,7 +16,9 @@ public class CompositeProcessor implements Processor {
 
     @Nonnull
     @Override
-    public List<NotifyRequest> execute(@Nonnull final Message message) {
+    public List<NotifyRequest> execute(
+        @Nonnull final Message message
+    ) {
         if (CollectionUtils.isEmpty(processors)) {
             return Collections.emptyList();
         }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,7 +21,9 @@ public class MessageRequest {
     private String strippedSignature;
     private String bodyHtml;
     private String strippedHtml;
-    private Long timestamp;
+    private long timestamp;
+
+    @NotNull
     private String token;
     private String signature;
     private String messageHeaders;

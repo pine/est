@@ -25,11 +25,16 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
         NativeWebRequest webRequest,
         WebDataBinderFactory binderFactory
     ) {
-        final Long timestamp =
+        final long timestamp =
             Optional.ofNullable(webRequest.getParameter("timestamp"))
                 .filter(StringUtils::isNotEmpty)
                 .map(Long::valueOf)
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("`timestamp` is required"));
+
+        final String token =
+            Optional.ofNullable(webRequest.getParameter("token"))
+                .filter(StringUtils::isNotEmpty)
+                .orElseThrow(() -> new IllegalArgumentException("`token` is required"));
 
         return MessageRequest.builder()
             .recipient(webRequest.getParameter("recipient"))
@@ -42,7 +47,7 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
             .bodyHtml(webRequest.getParameter("body-html"))
             .strippedHtml(webRequest.getParameter("stripped-html"))
             .timestamp(timestamp)
-            .token(webRequest.getParameter("token"))
+            .token(token)
             .signature(webRequest.getParameter("signature"))
             .build();
     }
