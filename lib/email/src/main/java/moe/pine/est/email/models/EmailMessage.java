@@ -1,11 +1,11 @@
-package moe.pine.est.mailgun.models;
+package moe.pine.est.email.models;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Message {
+public class EmailMessage {
     private String recipient;
     private String sender;
     private String from;
@@ -18,5 +18,5 @@ public class Message {
     private long timestamp;
     private String token;
     private String signature;
-    private MessageHeaders headers;
+    private EmailHeaders headers;
 }

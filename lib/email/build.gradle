@@ -1,0 +1,5 @@
+dependencies {
+
+    // Utilities
+    implementation 'commons-codec:commons-codec'
+}

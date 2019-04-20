@@ -1,4 +1,4 @@
-package moe.pine.est.processor;
+package moe.pine.est.slack.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotifyRequest {
+public class SlackMessage {
 }

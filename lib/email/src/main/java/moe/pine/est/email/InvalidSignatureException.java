@@ -1,4 +1,4 @@
-package moe.pine.est.services;
+package moe.pine.est.email;
 
 public class InvalidSignatureException extends RuntimeException {
 }

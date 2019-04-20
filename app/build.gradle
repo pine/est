@@ -6,8 +6,9 @@ configurations {
 
 dependencies {
     // Sub-projects
-    implementation project(':lib-message')
+    implementation project(':lib-email')
     implementation project(':lib-processor')
+    implementation project(':lib-slack')
 
     // Spring Framework
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -15,7 +16,4 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compileOnly 'javax.servlet:javax.servlet-api'
-    
-    // Utilities
-    implementation 'commons-codec:commons-codec'
 }

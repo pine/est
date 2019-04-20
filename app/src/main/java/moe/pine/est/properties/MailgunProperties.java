@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties("mailgun")
+@ConfigurationProperties("email")
 public class MailgunProperties {
     private String apiKey;
 }

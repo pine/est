@@ -6,17 +6,17 @@ include ':app'
 include ':lib-processor'
 project(':lib-processor').projectDir = new File(settingsDir, 'lib/processor')
 
-include ':lib-message'
-project(':lib-message').projectDir = new File(settingsDir, 'lib/message')
+include ':lib-email'
+project(':lib-email').projectDir = new File(settingsDir, 'lib/email')
 
-// include ':lib-slack'
-// project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')
+include ':lib-slack'
+project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')
 
 
 // // ----- Processors ---------------------------------------
 
-// include ':processors-connpass'
-// project(':processors-connpass').projectDir = new File(settingsDir, 'processors/connpass')
+include ':processors-connpass'
+project(':processors-connpass').projectDir = new File(settingsDir, 'processors/connpass')
 
 // include ':processors-me'
 // project(':processors-me').projectDir = new File(settingsDir, 'processors/me')
