@@ -1,4 +1,2 @@
 dependencies {
-    // Thorntail
-    compileOnly 'io.thorntail:cdi'
 }

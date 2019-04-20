@@ -1,6 +1,5 @@
 package moe.pine.est.slack.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+// @AllArgsConstructor
 public class SlackMessage {
 }
