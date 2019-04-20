@@ -3,6 +3,5 @@
 build/
 out/
 
-/app/src/main/resources/project-local.yml
-/app/src/main/resources/project-prod.yml
 /app/src/main/resources/application-local.yml
+/app/src/main/resources/application-prod.yml
