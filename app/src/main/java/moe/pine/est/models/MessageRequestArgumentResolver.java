@@ -30,11 +30,14 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
                 .filter(StringUtils::isNotEmpty)
                 .map(Long::valueOf)
                 .orElseThrow(() -> new IllegalArgumentException("`timestamp` is required"));
-
         final String token =
             Optional.ofNullable(webRequest.getParameter("token"))
                 .filter(StringUtils::isNotEmpty)
                 .orElseThrow(() -> new IllegalArgumentException("`token` is required"));
+        final String signature =
+            Optional.ofNullable(webRequest.getParameter("signature"))
+                .filter(StringUtils::isNotEmpty)
+                .orElseThrow(() -> new IllegalArgumentException("`signature` is required"));
 
         return MessageRequest.builder()
             .recipient(webRequest.getParameter("recipient"))
@@ -48,7 +51,7 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
             .strippedHtml(webRequest.getParameter("stripped-html"))
             .timestamp(timestamp)
             .token(token)
-            .signature(webRequest.getParameter("signature"))
+            .signature(signature)
             .build();
     }
 }

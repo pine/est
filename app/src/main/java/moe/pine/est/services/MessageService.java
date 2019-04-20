@@ -53,7 +53,7 @@ public class MessageService {
         final HmacUtils hmacUtils = new HmacUtils(HMAC_SHA_256, apiKey);
         final String signature = hmacUtils.hmacHex(timestamp + token);
 
-        if (!token.equals(signature)) {
+        if (!signature.equals(message.getSignature())) {
             log.debug(
                 "Verification failed :: " +
                     "from={}, subject={}, timestamp={}, expected-signature={}, actual-signature={}",
