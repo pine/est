@@ -10,7 +10,7 @@ $ ./gradlew :app:bootJar
 
 ```bash
 $ heroku config:set "JAVA_OPTS=-XX:+UseStringDeduplication"
-$ heroku config:set "LANG=en_US.UTF-8"
+$ heroku config:set "SPRING_PROFILES_ACTIVE=prod"
 $ heroku config:set "TZ=Asia/Tokyo"
 ```
 
