@@ -20,7 +20,7 @@ public class LogService {
         @Nonnull final EmailMessage message,
         @Nonnull final List<NotifyRequest> notifyRequests
     ) {
-        log.debug("message={}, notifyResults={}", message, notifyRequests);
+        // log.debug("message={}, notifyResults={}", message, notifyRequests);
 
         // TODO
     }
