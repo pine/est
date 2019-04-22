@@ -4,17 +4,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.processor.NotifyRequest;
 import moe.pine.est.properties.SlackProperties;
+import moe.pine.est.slack.Slack;
 import moe.pine.est.slack.models.SlackMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class SlackService {
     private final SlackProperties slackProperties;
+    private final Slack slack;
 
     @Nonnull
     public SlackMessage newMessage(
@@ -49,6 +53,6 @@ public class SlackService {
     public void postMessage(
             @Nonnull SlackMessage message
     ) {
-        log.debug(message.toString());
+        slack.postMessage(checkNotNull(message));
     }
 }

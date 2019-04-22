@@ -49,8 +49,6 @@ public class MessageController {
             messageRequest.getFrom(),
             messageRequest.getSubject());
 
-        log.debug(messageRequest.toString());
-
         final EmailMessage message = emailService.newMessage(messageRequest);
         try {
             emailService.verify(message);
