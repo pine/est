@@ -37,6 +37,7 @@ public class Slack {
         final MultiValueMap<String, String> values = new LinkedMultiValueMap<>();
         values.add("channel", message.getChannel());
         values.add("text", message.getText());
+        values.add("icon_url", message.getIconUrl());
 
         final HttpEntity<?> request = new HttpEntity<>(values, headers);
         final Status status = restTemplate.postForObject(SLACK_CHAT_POST_MESSAGE, request, Status.class);

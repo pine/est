@@ -47,6 +47,7 @@ public class SlackService {
                 .token(notificationGroup.getToken())
                 .channel(notificationGroup.getChannel())
                 .text(notifyRequest.getText())
+                .iconUrl(notificationGroup.getIconUrl())
                 .build();
     }
 
