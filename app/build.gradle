@@ -11,6 +11,7 @@ dependencies {
     implementation project(':lib-log')
     implementation project(':lib-processor')
     implementation project(':lib-slack')
+    implementation project(':processors-connpass')
 
     // Spring Framework
     implementation 'org.springframework.boot:spring-boot-starter-web'
