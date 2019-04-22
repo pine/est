@@ -6,6 +6,7 @@ configurations {
 
 dependencies {
     // Sub-projects
+    implementation project(':lib-connpass')
     implementation project(':lib-email')
     implementation project(':lib-log')
     implementation project(':lib-processor')

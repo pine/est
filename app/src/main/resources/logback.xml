@@ -9,6 +9,15 @@
     <!-- Hibernate Validator -->
     <logger name="org.hibernate.validator" level="WARN"/>
 
+    <!-- Lettuce -->
+    <logger name="io.lettuce.core" level="WARN"/>
+
+    <!-- Netty -->
+    <logger name="io.netty" level="WARN"/>
+
+    <!-- Reactor -->
+    <logger name="reactor" level="WARN"/>
+
     <!-- Spring -->
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.springframework.boot.context.config.ConfigFileApplicationListener" level="DEBUG"/>

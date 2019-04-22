@@ -3,6 +3,9 @@ include ':app'
 
 // ----- Library ------------------------------------------
 
+include ':lib-connpass'
+project(':lib-connpass').projectDir = new File(settingsDir, 'lib/connpass')
+
 include ':lib-email'
 project(':lib-email').projectDir = new File(settingsDir, 'lib/email')
 

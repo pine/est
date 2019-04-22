@@ -3,32 +3,26 @@ package moe.pine.est.config;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.processor.CompositeProcessor;
 import moe.pine.est.processor.Processor;
-import moe.pine.est.processor.ProcessorEnabled;
+import moe.pine.est.utils.ProcessorUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 @Slf4j
 public class ProcessorConfig {
     @Bean
     public CompositeProcessor compositeProcessor(
-        @Nonnull final List<Processor> processors
+            @Nullable final List<Processor> processors,
+            @Nonnull final ProcessorUtils processorUtils
     ) {
-        final List<Processor> enabledProcessors =
-            processors.stream()
-                .filter(processor -> processor
-                    .getClass()
-                    .isAnnotationPresent(ProcessorEnabled.class))
-                .collect(Collectors.toList());
-
+        final var enabledProcessors = processorUtils.filterEnabled(processors);
         final var compositeProcessor = new CompositeProcessor(enabledProcessors);
         log.info("CompositeProcessor created :: {}", compositeProcessor);
 
         return compositeProcessor;
-
     }
 }
