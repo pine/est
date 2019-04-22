@@ -26,7 +26,7 @@ public class ConnpassConfig {
                         ConnpassNotification
                                 .builder()
                                 .groupId(notification.getGroupId())
-                                .notificationGroupId(notification.getNotificationGroupId())
+                                .notificationGroupIds(notification.getNotificationGroupIds())
                                 .build())
                 .collect(Collectors.toUnmodifiableList());
     }

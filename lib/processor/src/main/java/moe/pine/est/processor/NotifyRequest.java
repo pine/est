@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotifyRequest {
-    private String notificationGroup;
-    private String body;
+    private String notificationGroupId;
+    private String text;
 }

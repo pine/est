@@ -25,6 +25,6 @@ public class ConnpassProperties {
     @Data
     public static class Notification {
         private String groupId;
-        private String notificationGroupId;
+        private List<String> notificationGroupIds;
     }
 }
