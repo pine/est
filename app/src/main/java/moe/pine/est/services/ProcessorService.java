@@ -20,9 +20,9 @@ public class ProcessorService {
     private final CompositeProcessor processor;
 
     @Nonnull
-    public List<NotifyRequest> execute(final EmailMessage emailMessage) {
-        checkNotNull(emailMessage);
+    public List<NotifyRequest> execute(final EmailMessage message) {
+        checkNotNull(message);
 
-        return processor.execute(emailMessage);
+        return processor.execute(message);
     }
 }
