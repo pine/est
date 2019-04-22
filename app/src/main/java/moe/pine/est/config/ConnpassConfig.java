@@ -1,6 +1,7 @@
 package moe.pine.est.config;
 
 import moe.pine.est.connpass.ConnpassNotification;
+import moe.pine.est.connpass.MessageFormats;
 import moe.pine.est.properties.ConnpassProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,5 +29,16 @@ public class ConnpassConfig {
                                 .notificationGroupId(notification.getNotificationGroupId())
                                 .build())
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Bean
+    public MessageFormats messageFormats(
+            @Nonnull final ConnpassProperties connpassProperties
+    ) {
+        final var messageFormats = connpassProperties.getStaff().getMessageFormats();
+        return new MessageFormats(
+                messageFormats.getJoinedFormat(),
+                messageFormats.getLeftFormat()
+        );
     }
 }

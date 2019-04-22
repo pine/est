@@ -17,10 +17,10 @@ public class LogService {
     private final LogRepository logRepository;
 
     public void log(
-        @Nonnull final EmailMessage message,
-        @Nonnull final List<NotifyRequest> notifyRequests
+            @Nonnull final EmailMessage message,
+            @Nonnull final List<NotifyRequest> notifyRequests
     ) {
-        // log.debug("message={}, notifyResults={}", message, notifyRequests);
+        log.debug("notifyResults={}", notifyRequests);
 
         // TODO
     }

@@ -23,4 +23,7 @@ dependencies {
 
     // Redis
     implementation 'io.lettuce:lettuce-core'
+
+    // Utilities
+    implementation 'com.github.spullara.mustache.java:compiler'
 }

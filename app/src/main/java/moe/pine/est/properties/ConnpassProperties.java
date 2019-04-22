@@ -12,7 +12,14 @@ public class ConnpassProperties {
 
     @Data
     public static class Staff {
+        private MessageFormats messageFormats;
         private List<Notification> notifications;
+    }
+
+    @Data
+    public static class MessageFormats {
+        private String joinedFormat;
+        private String leftFormat;
     }
 
     @Data
