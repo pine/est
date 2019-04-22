@@ -1,7 +1,6 @@
 package moe.pine.est.processor;
 
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import moe.pine.est.email.models.EmailMessage;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -14,7 +13,6 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @RequiredArgsConstructor
-@ToString
 public class CompositeProcessor implements Processor {
     private final List<Processor> processors;
 
@@ -39,5 +37,14 @@ public class CompositeProcessor implements Processor {
                     return notifyRequests.stream();
                 })
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public String toString() {
+        final String joinedProcessors =
+                processors.stream()
+                        .map(v -> v.getClass().getCanonicalName())
+                        .collect(Collectors.joining(", "));
+        return "CompositeProcessor(processors=[" + joinedProcessors + "])";
     }
 }
