@@ -10,6 +10,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nonnull;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -17,19 +20,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @RequiredArgsConstructor
 @Slf4j
 public class MessageLogRepository {
-    private final RedisTemplate redisTemplate;
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMM");
+
+    private final RedisTemplate<String, String> redisTemplate;
     private final Murmur3 murmur3;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Clock clock;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public String add(@Nonnull final MessageLog receiveLog)
+    public String add(@Nonnull final MessageLog messageLog)
             throws JsonProcessingException {
-        checkNotNull(receiveLog);
+        checkNotNull(messageLog);
 
-        final String json = objectMapper.writeValueAsString(receiveLog);
-        final String id = murmur3.hash128(json);
+        final String value = OBJECT_MAPPER.writeValueAsString(messageLog);
+        final String id = murmur3.hash128(value);
+        final String dt = LocalDate.now(clock).format(FORMATTER);
+        final String key = String.format("msg:%s:%s", dt, id);
 
-        log.debug("json={}, hash={}", json, id);
+        log.debug("key={}, value={}", key, value);
+
+        // redisTemplate.opsForValue().set(key, value);
 
         return id;
     }

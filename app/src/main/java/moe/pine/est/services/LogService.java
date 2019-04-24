@@ -32,6 +32,7 @@ public class LogService {
         return MessageLog.builder()
                 .from(message.getFrom())
                 .subject(message.getSubject())
+                .timestamp(message.getTimestamp())
                 .build();
     }
 }
