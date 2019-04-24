@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 public class MessageLogRepository {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMM");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMMdd");
 
     private final RedisTemplate<String, String> redisTemplate;
     private final Murmur3 murmur3;
