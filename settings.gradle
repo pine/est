@@ -12,6 +12,9 @@ project(':lib-email').projectDir = new File(settingsDir, 'lib/email')
 include ':lib-log'
 project(':lib-log').projectDir = new File(settingsDir, 'lib/log')
 
+include ':lib-murmur'
+project(':lib-murmur').projectDir = new File(settingsDir, 'lib/murmur')
+
 include ':lib-processor'
 project(':lib-processor').projectDir = new File(settingsDir, 'lib/processor')
 

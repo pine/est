@@ -67,7 +67,7 @@ public class MessageController {
             .map(slackService::newMessage)
             .forEach(slackService::postMessage);
 
-        logService.log(message, notifyRequests);
+        logService.add(message, notifyRequests);
         response.getWriter().write(OK.getReasonPhrase());
     }
 }
