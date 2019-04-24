@@ -1,6 +1,8 @@
 dependencies {
+    // Sub-projects
+    implementation project(':lib-murmur')
+
     // Spring Framework
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 }

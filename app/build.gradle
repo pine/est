@@ -9,6 +9,7 @@ dependencies {
     implementation project(':lib-connpass')
     implementation project(':lib-email')
     implementation project(':lib-log')
+    implementation project(':lib-murmur')
     implementation project(':lib-processor')
     implementation project(':lib-slack')
     implementation project(':processors-connpass')

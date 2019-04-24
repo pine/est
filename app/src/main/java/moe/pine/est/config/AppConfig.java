@@ -2,6 +2,7 @@ package moe.pine.est.config;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
+import moe.pine.est.murmur.Murmur3;
 import moe.pine.est.properties.AppProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,5 +20,10 @@ public class AppConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public Murmur3 murmur3() {
+        return new Murmur3(0L);
     }
 }

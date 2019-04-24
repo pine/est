@@ -69,6 +69,7 @@ subprojects {
 
             // Utilities
             dependency "com.github.spullara.mustache.java:compiler:0.9.6"
+            dependency 'com.sangupta:murmur:1.0.0'
 
             // Redis
             dependency "io.lettuce:lettuce-core:$lettuceVersion"
