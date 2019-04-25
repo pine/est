@@ -2,7 +2,8 @@ package moe.pine.est.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.MustacheFactory;
-import moe.pine.est.log.MessageLogRepository;
+import moe.pine.est.log.repositories.MessageLogRepository;
+import moe.pine.est.log.repositories.NotifyRequestLogRepository;
 import moe.pine.est.murmur.Murmur3;
 import moe.pine.est.properties.LogProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,8 +31,21 @@ public class LogConfig {
             mustacheFactory,
             murmur3,
             clock,
-            logProperties.getKeyFormats().getMessage(),
             logProperties.getRetentionDays()
         );
     }
+
+    @Bean
+    public NotifyRequestLogRepository notifyRequestLogRepository(
+        final RedisTemplate<String, String> redisTemplate,
+        final ObjectMapper objectMapper,
+        final MustacheFactory mustacheFactory
+    ) {
+        return new NotifyRequestLogRepository(
+            redisTemplate,
+            objectMapper,
+            mustacheFactory
+        );
+    }
+
 }
