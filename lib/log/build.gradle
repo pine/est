@@ -5,4 +5,7 @@ dependencies {
     // Spring Framework
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // Utilities
+    implementation 'com.github.spullara.mustache.java:compiler'
 }
