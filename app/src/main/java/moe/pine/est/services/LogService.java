@@ -19,20 +19,29 @@ public class LogService {
     private final MessageLogRepository messageLogRepository;
 
     public void add(
-            @Nonnull final EmailMessage message,
-            @Nonnull final List<NotifyRequest> notifyRequests
+        @Nonnull final EmailMessage message,
+        @Nonnull final List<NotifyRequest> notifyRequests
     ) throws JsonProcessingException {
         messageLogRepository.add(createLog(message, notifyRequests));
     }
 
     private MessageLog createLog(
-            @Nonnull final EmailMessage message,
-            @Nonnull final List<NotifyRequest> notifyRequests
+        @Nonnull final EmailMessage message,
+        @Nonnull final List<NotifyRequest> notifyRequests
     ) {
         return MessageLog.builder()
-                .from(message.getFrom())
-                .subject(message.getSubject())
-                .timestamp(message.getTimestamp())
-                .build();
+            .recipient(message.getRecipient())
+            .sender(message.getSender())
+            .from(message.getFrom())
+            .subject(message.getSubject())
+            .bodyPlain(message.getBodyPlain())
+            .strippedText(message.getStrippedText())
+            .strippedSignature(message.getStrippedSignature())
+            .bodyHtml(message.getBodyHtml())
+            .strippedHtml(message.getStrippedHtml())
+            .timestamp(message.getTimestamp())
+            .token(message.getToken())
+            .signature(message.getSignature())
+            .build();
     }
 }
