@@ -36,12 +36,12 @@ public class MessageLogRepository {
     private final Mustache keyFormat;
 
     public MessageLogRepository(
-            final RedisTemplate<String, String> redisTemplate,
-            final ObjectMapper objectMapper,
-            final MustacheFactory mustacheFactory,
-            final Murmur3 murmur3,
-            final Clock clock,
-            @Qualifier("messageLogKeyFormat") final String keyFormat
+        final RedisTemplate<String, String> redisTemplate,
+        final ObjectMapper objectMapper,
+        final MustacheFactory mustacheFactory,
+        final Murmur3 murmur3,
+        final Clock clock,
+        @Qualifier("messageLogKeyFormat") final String keyFormat
     ) {
         this.redisTemplate = checkNotNull(redisTemplate);
         this.objectMapper = checkNotNull(objectMapper);
@@ -52,7 +52,7 @@ public class MessageLogRepository {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void add(@Nonnull final MessageLog messageLog)
-            throws JsonProcessingException {
+        throws JsonProcessingException {
         checkNotNull(messageLog);
 
         final LocalDate dt = LocalDate.now(clock);
@@ -62,35 +62,35 @@ public class MessageLogRepository {
         final String itemKey = computeItemKey(dt, hash);
 
         log.debug("items-key={}, item-key={}, value={}", itemsKey, itemKey, item);
-
-        // redisTemplate.opsForValue().set(key, value);
+        redisTemplate.opsForList().rightPush(itemsKey, item);
+        redisTemplate.opsForValue().set(itemKey, item);
     }
 
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
     String computeItemKey(
-            final LocalDate dt,
-            final String hash
+        final LocalDate dt,
+        final String hash
     ) {
         final var writer = new StringWriter();
         final var scopes =
-                ImmutableMap.of(
-                        DT_KEY, dt.format(FORMATTER),
-                        HASH_KEY, hash
-                );
+            ImmutableMap.of(
+                DT_KEY, dt.format(FORMATTER),
+                HASH_KEY, hash
+            );
         keyFormat.execute(writer, scopes);
 
         return writer.toString();
     }
 
     private String computeItemsKey(
-            final LocalDate dt
+        final LocalDate dt
     ) {
         final var writer = new StringWriter();
         final var scopes =
-                ImmutableMap.of(
-                        DT_KEY, dt.format(FORMATTER)
-                );
+            ImmutableMap.of(
+                DT_KEY, dt.format(FORMATTER)
+            );
         keyFormat.execute(writer, scopes);
 
         return writer.toString();

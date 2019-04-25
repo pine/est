@@ -34,7 +34,7 @@ public class AppConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
+    
     @Bean
     public MustacheFactory mustacheFactory() {
         return new DefaultMustacheFactory();
