@@ -62,7 +62,7 @@ public class MessageLogRepository {
         final String itemKey = computeItemKey(dt, hash);
 
         log.debug("items-key={}, item-key={}, value={}", itemsKey, itemKey, item);
-        redisTemplate.opsForList().rightPush(itemsKey, item);
+        redisTemplate.opsForList().rightPush(itemsKey, hash);
         redisTemplate.opsForValue().set(itemKey, item);
     }
 
