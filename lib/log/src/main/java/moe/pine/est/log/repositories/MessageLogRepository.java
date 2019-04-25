@@ -76,7 +76,7 @@ public class MessageLogRepository {
         redisTemplate.expire(itemsKey, timeout, TimeUnit.SECONDS);
         redisTemplate.opsForValue().set(itemKey, item, timeout, TimeUnit.SECONDS);
 
-        return new MessageLogKey(dt, hash);
+        return new MessageLogKey(dt, hash, timeout);
     }
 
     @SuppressWarnings("WeakerAccess")
