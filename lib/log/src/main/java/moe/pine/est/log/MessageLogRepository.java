@@ -9,20 +9,19 @@ import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.log.models.MessageLog;
 import moe.pine.est.murmur.Murmur3;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nonnull;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.Clock;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Repository
 @Slf4j
 public class MessageLogRepository {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMMdd");
@@ -34,6 +33,7 @@ public class MessageLogRepository {
     private final Murmur3 murmur3;
     private final Clock clock;
     private final Mustache keyFormat;
+    private final int retentionDays;
 
     public MessageLogRepository(
         final RedisTemplate<String, String> redisTemplate,
@@ -41,13 +41,15 @@ public class MessageLogRepository {
         final MustacheFactory mustacheFactory,
         final Murmur3 murmur3,
         final Clock clock,
-        @Qualifier("messageLogKeyFormat") final String keyFormat
+        final String keyFormat,
+        final int retentionDays
     ) {
         this.redisTemplate = checkNotNull(redisTemplate);
         this.objectMapper = checkNotNull(objectMapper);
         this.murmur3 = checkNotNull(murmur3);
         this.clock = checkNotNull(clock);
         this.keyFormat = mustacheFactory.compile(new StringReader(keyFormat), "");
+        this.retentionDays = retentionDays;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -55,21 +57,30 @@ public class MessageLogRepository {
         throws JsonProcessingException {
         checkNotNull(messageLog);
 
-        final LocalDate dt = LocalDate.now(clock);
+        final var now = LocalDateTime.now(clock);
         final String item = objectMapper.writeValueAsString(messageLog);
         final String hash = murmur3.hash128(item);
-        final String itemsKey = computeItemsKey(dt);
-        final String itemKey = computeItemKey(dt, hash);
+        final String itemsKey = computeItemsKey(now);
+        final String itemKey = computeItemKey(now, hash);
 
-        log.debug("items-key={}, item-key={}, value={}", itemsKey, itemKey, item);
+        final var expiredAt = now
+            .plus(retentionDays + 1, ChronoUnit.DAYS)
+            .truncatedTo(ChronoUnit.DAYS);
+        final long timeout = ChronoUnit.SECONDS.between(now, expiredAt);
+
+        log.debug(
+            "A message logged :: items-key={}, item-key={}, value={}, expired-at={}, timeout={}",
+            itemsKey, itemKey, item, expiredAt, timeout);
+
         redisTemplate.opsForList().rightPush(itemsKey, hash);
-        redisTemplate.opsForValue().set(itemKey, item);
+        redisTemplate.expire(itemsKey, timeout, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(itemKey, item, timeout, TimeUnit.SECONDS);
     }
 
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
     String computeItemKey(
-        final LocalDate dt,
+        final LocalDateTime dt,
         final String hash
     ) {
         final var writer = new StringWriter();
@@ -84,7 +95,7 @@ public class MessageLogRepository {
     }
 
     private String computeItemsKey(
-        final LocalDate dt
+        final LocalDateTime dt
     ) {
         final var writer = new StringWriter();
         final var scopes =

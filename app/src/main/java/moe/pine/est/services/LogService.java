@@ -16,13 +16,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class LogService {
-    private final MessageLogRepository receiveLogRepository;
+    private final MessageLogRepository messageLogRepository;
 
     public void add(
             @Nonnull final EmailMessage message,
             @Nonnull final List<NotifyRequest> notifyRequests
     ) throws JsonProcessingException {
-        receiveLogRepository.add(createLog(message, notifyRequests));
+        messageLogRepository.add(createLog(message, notifyRequests));
     }
 
     private MessageLog createLog(
