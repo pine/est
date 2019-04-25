@@ -20,10 +20,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @RequiredArgsConstructor
 @Slf4j
 public class MessageLogRepository {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMMdd");
 
     private final RedisTemplate<String, String> redisTemplate;
+    private final ObjectMapper objectMapper;
     private final Murmur3 murmur3;
     private final Clock clock;
 
@@ -32,7 +32,7 @@ public class MessageLogRepository {
             throws JsonProcessingException {
         checkNotNull(messageLog);
 
-        final String value = OBJECT_MAPPER.writeValueAsString(messageLog);
+        final String value = objectMapper.writeValueAsString(messageLog);
         final String id = murmur3.hash128(value);
         final String dt = LocalDate.now(clock).format(FORMATTER);
         final String key = String.format("msg:%s:%s", dt, id);
