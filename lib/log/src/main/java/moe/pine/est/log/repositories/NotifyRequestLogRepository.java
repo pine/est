@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.log.models.MessageLogKey;
 import moe.pine.est.log.models.NotifyRequestLog;
+import moe.pine.est.log.utils.TimeoutCalculator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -29,21 +30,27 @@ public class NotifyRequestLogRepository {
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;
     private final Mustache itemsKeyFormat;
+    private final TimeoutCalculator timeoutCalculator;
+    private final int retentionDays;
 
     public NotifyRequestLogRepository(
-        final RedisTemplate<String, String> redisTemplate,
-        final ObjectMapper objectMapper,
-        final MustacheFactory mustacheFactory
+            final RedisTemplate<String, String> redisTemplate,
+            final ObjectMapper objectMapper,
+            final MustacheFactory mustacheFactory,
+            final TimeoutCalculator timeoutCalculator,
+            final int retentionDays
     ) {
         this.redisTemplate = checkNotNull(redisTemplate);
         this.objectMapper = checkNotNull(objectMapper);
         this.itemsKeyFormat = mustacheFactory.compile(new StringReader(ITEMS_KEY_FORMAT), "");
+        this.timeoutCalculator = checkNotNull(timeoutCalculator);
+        this.retentionDays = retentionDays;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void add(
-        @Nonnull MessageLogKey messageLogKey,
-        @Nonnull List<NotifyRequestLog> notifyRequestLogs
+            @Nonnull MessageLogKey messageLogKey,
+            @Nonnull List<NotifyRequestLog> notifyRequestLogs
     ) throws JsonProcessingException {
         checkNotNull(messageLogKey);
         checkNotNull(notifyRequestLogs);
@@ -53,17 +60,18 @@ public class NotifyRequestLogRepository {
         }
 
         final String item = objectMapper.writeValueAsString(notifyRequestLogs);
-        final String itemsKey = computeItemsKey(messageLogKey.getDt(), messageLogKey.getHash());
+        final String itemsKey = buildKey(messageLogKey.getDt(), messageLogKey.getHash());
+        final long timeout = timeoutCalculator.calc(retentionDays);
 
-        redisTemplate.opsForValue().set(itemsKey, item, messageLogKey.getTimeout(), TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(itemsKey, item, timeout, TimeUnit.SECONDS);
     }
 
 
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
-    String computeItemsKey(
-        final String dt,
-        final String hash
+    String buildKey(
+            final String dt,
+            final String hash
     ) {
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt, HASH_KEY, hash);

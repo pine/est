@@ -6,5 +6,4 @@ import lombok.Value;
 public class MessageLogKey {
     private final String dt;
     private final String hash;
-    private final long timeout;
 }
