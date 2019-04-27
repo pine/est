@@ -8,8 +8,8 @@ import lombok.Data;
 public class MessageLog {
     private String recipient;
     private String sender;
-    private final String from;
-    private final String subject;
+    private String from;
+    private String subject;
     private String bodyPlain;
     private String strippedText;
     private String strippedSignature;
