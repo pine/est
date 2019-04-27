@@ -1,6 +1,5 @@
 package moe.pine.est.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.email.models.EmailMessage;
@@ -35,18 +34,6 @@ public class LogService {
 
         final var messageLogKey = messageLogRepository.add(messageLog);
         notifyRequestLogRepository.add(messageLogKey, notifyRequestLogs);
-
-        log.debug("count={}", messageLogRepository.count());
-
-        final var ids = messageLogRepository.getIds(0, 5);
-        log.debug("ids={}", ids);
-
-        try {
-            final var messageLogs = messageLogRepository.get(ids);
-            log.debug("messageLogs={}", messageLogs);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
     }
 
     private MessageLog createMessageLog(
