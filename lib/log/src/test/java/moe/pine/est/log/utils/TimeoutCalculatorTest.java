@@ -12,9 +12,9 @@ import static org.junit.Assert.assertEquals;
 
 public class TimeoutCalculatorTest {
     private static final LocalDateTime DATE_1 =
-            LocalDateTime.of(2019, 4, 26, 19, 12, 34, 0);
+        LocalDateTime.of(2019, 4, 26, 19, 12, 34, 0);
     private static final LocalDateTime DATE_2 =
-            LocalDateTime.of(2019, 4, 26, 0, 0, 0, 0);
+        LocalDateTime.of(2019, 4, 26, 0, 0, 0, 0);
 
     private TimeoutCalculator timeoutCalculator1;
     private TimeoutCalculator timeoutCalculator2;
@@ -27,6 +27,12 @@ public class TimeoutCalculatorTest {
         final var clock2 = Clock.fixed(DATE_2.toInstant(zoneOffset), zoneId);
         timeoutCalculator1 = new TimeoutCalculator(clock1);
         timeoutCalculator2 = new TimeoutCalculator(clock2);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test(expected = NullPointerException.class)
+    public void constructorTest_null() {
+        new TimeoutCalculator(null);
     }
 
     @SuppressWarnings("PointlessArithmeticExpression")

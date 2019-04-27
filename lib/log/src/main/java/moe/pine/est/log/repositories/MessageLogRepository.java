@@ -42,14 +42,15 @@ public class MessageLogRepository {
     private final Mustache itemKeyFormat;
 
     public MessageLogRepository(
-            final RedisTemplate<String, String> redisTemplate,
-            final ObjectMapper objectMapper,
-            final MustacheFactory mustacheFactory,
-            final Murmur3 murmur3,
-            final Clock clock,
-            final TimeoutCalculator timeoutCalculator,
-            final int retentionDays
+        final RedisTemplate<String, String> redisTemplate,
+        final ObjectMapper objectMapper,
+        final MustacheFactory mustacheFactory,
+        final Murmur3 murmur3,
+        final Clock clock,
+        final TimeoutCalculator timeoutCalculator,
+        final int retentionDays
     ) {
+        checkNotNull(mustacheFactory);
         checkArgument(retentionDays >= 0);
 
         this.redisTemplate = checkNotNull(redisTemplate);
@@ -63,12 +64,12 @@ public class MessageLogRepository {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public MessageLogKey add(@Nonnull final MessageLog messageLog)
-            throws JsonProcessingException {
+    public MessageLogKey add(
+        @Nonnull final MessageLog messageLog
+    ) throws JsonProcessingException {
         checkNotNull(messageLog);
 
-        final var now = LocalDateTime.now(clock);
-        final String dt = now.format(FORMATTER);
+        final String dt = LocalDateTime.now(clock).format(FORMATTER);
         final String item = objectMapper.writeValueAsString(messageLog);
         final String hash = murmur3.hash128(item);
         final String itemsKey = buildItemsKey(dt);
@@ -85,8 +86,8 @@ public class MessageLogRepository {
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
     String buildItemKey(
-            final String dt,
-            final String hash
+        final String dt,
+        final String hash
     ) {
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt, HASH_KEY, hash);
@@ -98,7 +99,7 @@ public class MessageLogRepository {
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
     String buildItemsKey(
-            final String dt
+        final String dt
     ) {
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt);
