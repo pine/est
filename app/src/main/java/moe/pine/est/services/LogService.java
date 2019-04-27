@@ -41,8 +41,12 @@ public class LogService {
         final var ids = messageLogRepository.getIds(0, 5);
         log.debug("ids={}", ids);
 
-        final var messageLogs = messageLogRepository.get(ids);
-        log.debug("messageLogs={}", messageLogs);
+        try {
+            final var messageLogs = messageLogRepository.get(ids);
+            log.debug("messageLogs={}", messageLogs);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     private MessageLog createMessageLog(
