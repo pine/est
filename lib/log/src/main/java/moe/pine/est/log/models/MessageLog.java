@@ -2,9 +2,11 @@ package moe.pine.est.log.models;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
 public class MessageLog {
     private String recipient;
     private String sender;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -130,6 +131,7 @@ public class MessageLogRepository {
         return itemKeys.subList(offset, toIndex);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public List<Pair<MessageLogId, MessageLog>> get(
         @Nonnull final List<MessageLogId> ids
     ) throws IOException {
@@ -146,16 +148,17 @@ public class MessageLogRepository {
             return Collections.emptyList();
         }
 
-        final ArrayList<Pair<MessageLogId, MessageLog>> result =
-            Lists.newArrayListWithCapacity(values.size());
+
+        final var builder =
+            ImmutableList.<Pair<MessageLogId, MessageLog>>builderWithExpectedSize(values.size());
         for (int i = 0; i < ids.size(); ++i) {
             if (values.get(i) != null) {
                 final var messageLog = objectMapper.readValue(values.get(i), MessageLog.class);
-                result.add(Pair.of(ids.get(i), messageLog));
+                builder.add(Pair.of(ids.get(i), messageLog));
             }
         }
 
-        return result;
+        return builder.build();
     }
 
     @SuppressWarnings("WeakerAccess")
