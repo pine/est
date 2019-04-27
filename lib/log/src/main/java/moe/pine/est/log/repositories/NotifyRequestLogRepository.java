@@ -7,7 +7,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
-import moe.pine.est.log.models.MessageLogKey;
+import moe.pine.est.log.models.MessageLogId;
 import moe.pine.est.log.models.NotifyRequestLog;
 import moe.pine.est.log.utils.TimeoutCalculator;
 import org.apache.commons.collections4.CollectionUtils;
@@ -49,7 +49,7 @@ public class NotifyRequestLogRepository {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void add(
-            @Nonnull MessageLogKey messageLogKey,
+            @Nonnull MessageLogId messageLogKey,
             @Nonnull List<NotifyRequestLog> notifyRequestLogs
     ) throws JsonProcessingException {
         checkNotNull(messageLogKey);

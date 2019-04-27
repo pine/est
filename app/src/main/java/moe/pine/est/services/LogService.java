@@ -12,6 +12,7 @@ import moe.pine.est.processor.NotifyRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class LogService {
     public void add(
         @Nonnull final EmailMessage message,
         @Nonnull final List<NotifyRequest> notifyRequests
-    ) throws JsonProcessingException {
+    ) throws IOException {
         final var messageLog = createMessageLog(message);
         final var notifyRequestLogs =
             notifyRequests.stream()
@@ -36,6 +37,12 @@ public class LogService {
         notifyRequestLogRepository.add(messageLogKey, notifyRequestLogs);
 
         log.debug("count={}", messageLogRepository.count());
+
+        final var ids = messageLogRepository.getIds(0, 5);
+        log.debug("ids={}", ids);
+
+        final var messageLogs = messageLogRepository.get(ids);
+        log.debug("messageLogs={}", messageLogs);
     }
 
     private MessageLog createMessageLog(
