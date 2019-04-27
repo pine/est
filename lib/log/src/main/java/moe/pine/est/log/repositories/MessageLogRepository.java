@@ -19,7 +19,9 @@ import java.io.StringWriter;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -81,6 +83,21 @@ public class MessageLogRepository {
         redisTemplate.opsForValue().set(itemKey, item, timeout, TimeUnit.SECONDS);
 
         return new MessageLogKey(dt, hash);
+    }
+
+    public int count() {
+        final var now = LocalDateTime.now(clock);
+        return IntStream
+            .rangeClosed(0, retentionDays)
+            .boxed()
+            .map(days -> now.plusDays(days).format(FORMATTER))
+            .map(this::buildItemsKey)
+            .map(key ->
+                Optional
+                    .ofNullable(redisTemplate.opsForList().size(key))
+                    .orElse(0L))
+            .mapToInt(Long::intValue)
+            .sum();
     }
 
     @SuppressWarnings("WeakerAccess")

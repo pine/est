@@ -34,6 +34,8 @@ public class LogService {
 
         final var messageLogKey = messageLogRepository.add(messageLog);
         notifyRequestLogRepository.add(messageLogKey, notifyRequestLogs);
+
+        log.debug("count={}", messageLogRepository.count());
     }
 
     private MessageLog createMessageLog(
