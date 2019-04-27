@@ -26,12 +26,13 @@ public class LogService {
         @Nonnull final EmailMessage message,
         @Nonnull final List<NotifyRequest> notifyRequests
     ) throws JsonProcessingException {
-        final var messageLogKey = messageLogRepository.add(createMessageLog(message));
+        final var messageLog = createMessageLog(message);
         final var notifyRequestLogs =
             notifyRequests.stream()
                 .map(this::createNotifyRequestLog)
                 .collect(Collectors.toUnmodifiableList());
 
+        final var messageLogKey = messageLogRepository.add(messageLog);
         notifyRequestLogRepository.add(messageLogKey, notifyRequestLogs);
     }
 
