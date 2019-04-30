@@ -21,6 +21,7 @@ OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.2+9, mixed mode)
 ```
 
 ## Deployment
+[Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is required.
 
 ```bash
 # Setup environment variables
