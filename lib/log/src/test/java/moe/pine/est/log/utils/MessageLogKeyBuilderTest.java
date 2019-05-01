@@ -34,6 +34,12 @@ public class MessageLogKeyBuilderTest {
         keyBuilder2 = new MessageLogKeyBuilder(mustacheFactory, clock2, RETENTION_DAYS_2);
     }
 
+    @Test(expected = NullPointerException.class)
+    @SuppressWarnings("ConstantConditions")
+    public void constructorTest_nullMustacheFactory() {
+        new MessageLogKeyBuilder(null, Clock.systemUTC(), RETENTION_DAYS_1);
+    }
+
     @Test
     public void formattedDtTest() {
         assertEquals("20190426", keyBuilder1.formattedDt());

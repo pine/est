@@ -2,7 +2,6 @@ package moe.pine.est.log.repositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mustachejava.MustacheFactory;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.time.Clock;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
