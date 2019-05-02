@@ -1,0 +1,25 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 1
+
+app:
+  site-url: https://github.com/pine/est
+
+connpass:
+  staff:
+    message-formats:
+      joined-format: '「 {{name}} 」さんがイベント「 {{event}} 」へ参加申し込みしました。'
+      left-format: ''
+    notifications:
+      - group-id: group-id
+        notification-group-ids:
+          - notification-group-id
+
+mailgun:
+  api-key: key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+log:
+  retention-days: 3

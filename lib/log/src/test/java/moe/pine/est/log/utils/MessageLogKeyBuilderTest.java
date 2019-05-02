@@ -2,7 +2,6 @@ package moe.pine.est.log.utils;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.google.common.collect.ImmutableList;
-import moe.pine.est.log.repositories.MessageLogKeyBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

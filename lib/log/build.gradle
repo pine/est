@@ -7,6 +7,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+    // Redis
+    testImplementation 'io.lettuce:lettuce-core'
+
     // Utilities
     implementation 'com.github.spullara.mustache.java:compiler'
 }

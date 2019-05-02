@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.log.models.MessageLog;
 import moe.pine.est.log.models.MessageLogId;
+import moe.pine.est.log.utils.MessageLogKeyBuilder;
 import moe.pine.est.log.utils.TimeoutCalculator;
 import moe.pine.est.murmur.Murmur3;
 import org.apache.commons.collections4.CollectionUtils;
@@ -35,12 +36,12 @@ public class MessageLogRepository {
     private final MessageLogKeyBuilder keyBuilder;
 
     public MessageLogRepository(
-        final RedisTemplate<String, String> redisTemplate,
-        final ObjectMapper objectMapper,
-        final Murmur3 murmur3,
-        final TimeoutCalculator timeoutCalculator,
-        final int retentionDays,
-        final MessageLogKeyBuilder keyBuilder
+        @Nonnull final RedisTemplate<String, String> redisTemplate,
+        @Nonnull final ObjectMapper objectMapper,
+        @Nonnull final Murmur3 murmur3,
+        @Nonnull final TimeoutCalculator timeoutCalculator,
+        @Nonnull final MessageLogKeyBuilder keyBuilder,
+        final int retentionDays
     ) {
         checkArgument(retentionDays >= 0);
 
@@ -52,6 +53,7 @@ public class MessageLogRepository {
         this.keyBuilder = checkNotNull(keyBuilder);
     }
 
+    @Nonnull
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public MessageLogId add(
         @Nonnull final MessageLog messageLog

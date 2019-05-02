@@ -1,4 +1,4 @@
-package moe.pine.est.log.repositories;
+package moe.pine.est.log.utils;
 
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -44,10 +44,12 @@ public class MessageLogKeyBuilder {
         this.itemKeyFormat = mustacheFactory.compile(new StringReader(ITEM_KEY_FORMAT), "");
     }
 
+    @Nonnull
     public String formattedDt() {
         return LocalDateTime.now(clock).format(FORMATTER);
     }
 
+    @Nonnull
     public String buildItemKey(
         final String dt,
         final String hash
@@ -59,6 +61,7 @@ public class MessageLogKeyBuilder {
         return writer.toString();
     }
 
+    @Nonnull
     public String buildListKey(
         final String dt
     ) {
@@ -69,6 +72,7 @@ public class MessageLogKeyBuilder {
         return writer.toString();
     }
 
+    @Nonnull
     public List<String> buildListKeys() {
         final var now = LocalDateTime.now(clock);
         return IntStream
@@ -79,6 +83,7 @@ public class MessageLogKeyBuilder {
             .collect(Collectors.toUnmodifiableList());
     }
 
+    @Nonnull
     public MessageLogId parseListKey(final String key) {
         final String dt = key.substring(ITEMS_KEY_PREFIX.length());
         return new MessageLogId(dt, null);

@@ -2,7 +2,7 @@ package moe.pine.est.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.MustacheFactory;
-import moe.pine.est.log.repositories.MessageLogKeyBuilder;
+import moe.pine.est.log.utils.MessageLogKeyBuilder;
 import moe.pine.est.log.repositories.MessageLogRepository;
 import moe.pine.est.log.repositories.NotifyRequestLogRepository;
 import moe.pine.est.log.utils.TimeoutCalculator;
@@ -23,17 +23,17 @@ public class LogConfig {
         final RedisTemplate<String, String> redisTemplate,
         final ObjectMapper objectMapper,
         final Murmur3 murmur3,
-        final LogProperties logProperties,
         final TimeoutCalculator timeoutCalculator,
-        final MessageLogKeyBuilder keyBuilder
+        final MessageLogKeyBuilder keyBuilder,
+        final LogProperties logProperties
     ) {
         return new MessageLogRepository(
             redisTemplate,
             objectMapper,
             murmur3,
             timeoutCalculator,
-            logProperties.getRetentionDays(),
-            keyBuilder
+            keyBuilder,
+            logProperties.getRetentionDays()
         );
     }
 
