@@ -43,12 +43,12 @@ public class Slack {
         final Status status = restTemplate.postForObject(SLACK_CHAT_POST_MESSAGE, request, Status.class);
 
         if (status == null) {
-            throw new SlackException("Failed to call chat.postMessage API. An empty response received.");
+            throw new SlackException("Failed to call `chat.postMessage` API. An empty response received.");
         }
         if (!status.isOk()) {
             throw new SlackException(
                     String.format(
-                            "Failed to call users.setPhoto API :: ok=%s, error=\"%s\"",
+                            "Failed to call `chat.postMessage` API :: ok=%s, error=\"%s\"",
                             String.valueOf(status.isOk()),
                             status.getError()));
         }
