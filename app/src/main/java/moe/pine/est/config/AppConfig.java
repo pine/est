@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
-import moe.pine.est.murmur.Murmur3;
 import moe.pine.est.properties.AppProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -34,14 +33,9 @@ public class AppConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-    
+
     @Bean
     public MustacheFactory mustacheFactory() {
         return new DefaultMustacheFactory();
-    }
-
-    @Bean
-    public Murmur3 murmur3() {
-        return new Murmur3(0L);
     }
 }

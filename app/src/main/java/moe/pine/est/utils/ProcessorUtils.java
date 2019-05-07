@@ -6,6 +6,7 @@ import moe.pine.est.processor.ProcessorEnabled;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ProcessorUtils {
+    @Nonnull
     public List<Processor> filterEnabled(
             @Nullable final List<Processor> processors
     ) {
