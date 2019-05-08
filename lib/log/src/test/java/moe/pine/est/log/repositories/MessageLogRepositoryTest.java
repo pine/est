@@ -14,16 +14,11 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 
-public class MessageLogRepositoryTest {
+public class MessageLogRepositoryTest extends TestBase {
     private static final int RETENTION_DAYS = 3;
     private static final int ILLEGAL_RETENTION_DAYS = -1;
     private static final String DT = "20190502";
@@ -36,8 +31,6 @@ public class MessageLogRepositoryTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-    private RedisTemplate<String, String> redisTemplate;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -55,37 +48,27 @@ public class MessageLogRepositoryTest {
 
     @Before
     public void setUp() {
-        final var configuration = new RedisStandaloneConfiguration("localhost", 6379);
-        configuration.setDatabase(1);
-
-        final var factory = new LettuceConnectionFactory(configuration);
-        factory.afterPropertiesSet();
-
-        redisTemplate = spy(new RedisTemplate<>());
-        redisTemplate.setConnectionFactory(factory);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
-        redisTemplate.afterPropertiesSet();
+        super.setUp();
 
         messageLogRepository = new MessageLogRepository(
-            redisTemplate,
-            objectMapper,
-            murmur3,
-            timeoutCalculator,
-            messageLogKeyBuilder,
-            RETENTION_DAYS
+                redisTemplate,
+                objectMapper,
+                murmur3,
+                timeoutCalculator,
+                messageLogKeyBuilder,
+                RETENTION_DAYS
         );
     }
 
     @Test
     public void constructorTest() {
         new MessageLogRepository(
-            redisTemplate,
-            objectMapper,
-            murmur3,
-            timeoutCalculator,
-            messageLogKeyBuilder,
-            RETENTION_DAYS
+                redisTemplate,
+                objectMapper,
+                murmur3,
+                timeoutCalculator,
+                messageLogKeyBuilder,
+                RETENTION_DAYS
         );
     }
 
@@ -95,12 +78,12 @@ public class MessageLogRepositoryTest {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-            null,
-            objectMapper,
-            murmur3,
-            timeoutCalculator,
-            messageLogKeyBuilder,
-            RETENTION_DAYS
+                null,
+                objectMapper,
+                murmur3,
+                timeoutCalculator,
+                messageLogKeyBuilder,
+                RETENTION_DAYS
         );
     }
 
@@ -110,12 +93,12 @@ public class MessageLogRepositoryTest {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-            redisTemplate,
-            null,
-            murmur3,
-            timeoutCalculator,
-            messageLogKeyBuilder,
-            RETENTION_DAYS
+                redisTemplate,
+                null,
+                murmur3,
+                timeoutCalculator,
+                messageLogKeyBuilder,
+                RETENTION_DAYS
         );
     }
 
@@ -125,12 +108,12 @@ public class MessageLogRepositoryTest {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-            redisTemplate,
-            objectMapper,
-            null,
-            timeoutCalculator,
-            messageLogKeyBuilder,
-            RETENTION_DAYS
+                redisTemplate,
+                objectMapper,
+                null,
+                timeoutCalculator,
+                messageLogKeyBuilder,
+                RETENTION_DAYS
         );
     }
 
@@ -140,12 +123,12 @@ public class MessageLogRepositoryTest {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-            redisTemplate,
-            objectMapper,
-            murmur3,
-            null,
-            messageLogKeyBuilder,
-            RETENTION_DAYS
+                redisTemplate,
+                objectMapper,
+                murmur3,
+                null,
+                messageLogKeyBuilder,
+                RETENTION_DAYS
         );
     }
 
@@ -155,12 +138,12 @@ public class MessageLogRepositoryTest {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-            redisTemplate,
-            objectMapper,
-            murmur3,
-            timeoutCalculator,
-            null,
-            RETENTION_DAYS
+                redisTemplate,
+                objectMapper,
+                murmur3,
+                timeoutCalculator,
+                null,
+                RETENTION_DAYS
         );
     }
 
@@ -169,12 +152,12 @@ public class MessageLogRepositoryTest {
         expectedException.expect(IllegalArgumentException.class);
 
         new MessageLogRepository(
-            redisTemplate,
-            objectMapper,
-            murmur3,
-            timeoutCalculator,
-            messageLogKeyBuilder,
-            ILLEGAL_RETENTION_DAYS
+                redisTemplate,
+                objectMapper,
+                murmur3,
+                timeoutCalculator,
+                messageLogKeyBuilder,
+                ILLEGAL_RETENTION_DAYS
         );
     }
 
