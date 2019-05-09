@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.Nonnull;
+
 import static org.mockito.Mockito.spy;
 
 public class TestBase {
@@ -15,6 +17,7 @@ public class TestBase {
     private static final int REDIS_PORT = 6379;
     private static final int REDIS_DATABASE = 1;
 
+    @Nonnull
     protected RedisTemplate<String, String> redisTemplate;
 
     @Before

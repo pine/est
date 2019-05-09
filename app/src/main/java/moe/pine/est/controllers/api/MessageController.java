@@ -1,4 +1,4 @@
-package moe.pine.est.controllers;
+package moe.pine.est.controllers.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

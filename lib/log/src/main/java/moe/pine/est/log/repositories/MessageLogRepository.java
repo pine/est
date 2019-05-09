@@ -15,10 +15,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -36,12 +38,12 @@ public class MessageLogRepository {
     private final MessageLogKeyBuilder keyBuilder;
 
     public MessageLogRepository(
-        @Nonnull final RedisTemplate<String, String> redisTemplate,
-        @Nonnull final ObjectMapper objectMapper,
-        @Nonnull final Murmur3 murmur3,
-        @Nonnull final TimeoutCalculator timeoutCalculator,
-        @Nonnull final MessageLogKeyBuilder keyBuilder,
-        final int retentionDays
+            @Nonnull final RedisTemplate<String, String> redisTemplate,
+            @Nonnull final ObjectMapper objectMapper,
+            @Nonnull final Murmur3 murmur3,
+            @Nonnull final TimeoutCalculator timeoutCalculator,
+            @Nonnull final MessageLogKeyBuilder keyBuilder,
+            final int retentionDays
     ) {
         checkArgument(retentionDays >= 0);
 
@@ -56,7 +58,7 @@ public class MessageLogRepository {
     @Nonnull
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public MessageLogId add(
-        @Nonnull final MessageLog messageLog
+            @Nonnull final MessageLog messageLog
     ) throws JsonProcessingException {
         checkNotNull(messageLog);
 
@@ -77,14 +79,15 @@ public class MessageLogRepository {
     public int count() {
         final var keys = keyBuilder.buildListKeys();
         return keys.stream()
-            .map(key ->
-                Optional
-                    .ofNullable(redisTemplate.opsForList().size(key))
-                    .orElse(0L))
-            .mapToInt(Long::intValue)
-            .sum();
+                .map(key ->
+                        Optional
+                                .ofNullable(redisTemplate.opsForList().size(key))
+                                .orElse(0L))
+                .mapToInt(Long::intValue)
+                .sum();
     }
 
+    @Nonnull
     public List<MessageLogId> getIds(int offset, int limit) {
         final int maxItemLength = offset + limit;
         final ArrayList<MessageLogId> itemKeys = Lists.newArrayListWithCapacity(maxItemLength);
@@ -99,9 +102,9 @@ public class MessageLogRepository {
             if (CollectionUtils.isNotEmpty(hashes)) {
                 final String dt = keyBuilder.parseListKey(listKey).getDt();
                 final List<MessageLogId> keys =
-                    hashes.stream()
-                        .map(hash -> new MessageLogId(dt, hash))
-                        .collect(Collectors.toUnmodifiableList());
+                        hashes.stream()
+                                .map(hash -> new MessageLogId(dt, hash))
+                                .collect(Collectors.toUnmodifiableList());
                 itemKeys.addAll(keys);
             }
         }
@@ -110,17 +113,28 @@ public class MessageLogRepository {
         return itemKeys.subList(offset, toIndex);
     }
 
+    @Nullable
+    public MessageLog get(
+            @Nonnull final MessageLogId id
+    ) throws IOException {
+        final var ids = Collections.singletonList(id);
+        final var messageLogs = get(ids);
+        return messageLogs.isEmpty() ? null : messageLogs.get(0).getValue();
+    }
+
+    @Nonnull
     @SuppressWarnings("UnstableApiUsage")
     public List<Pair<MessageLogId, MessageLog>> get(
-        @Nonnull final List<MessageLogId> ids
+            @Nonnull final List<MessageLogId> ids
     ) throws IOException {
         if (CollectionUtils.isEmpty(ids)) {
             return Collections.emptyList();
         }
 
         final List<String> keys = ids.stream()
-            .map(id -> keyBuilder.buildItemKey(id.getDt(), id.getHash()))
-            .collect(Collectors.toUnmodifiableList());
+                .filter(Objects::nonNull)
+                .map(id -> keyBuilder.buildItemKey(id.getDt(), id.getHash()))
+                .collect(Collectors.toUnmodifiableList());
 
         final List<String> values = redisTemplate.opsForValue().multiGet(keys);
         if (CollectionUtils.isEmpty(values)) {
@@ -129,7 +143,7 @@ public class MessageLogRepository {
 
 
         final var builder =
-            ImmutableList.<Pair<MessageLogId, MessageLog>>builderWithExpectedSize(values.size());
+                ImmutableList.<Pair<MessageLogId, MessageLog>>builderWithExpectedSize(values.size());
         for (int i = 0; i < ids.size(); ++i) {
             if (values.get(i) != null) {
                 final var messageLog = objectMapper.readValue(values.get(i), MessageLog.class);
