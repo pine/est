@@ -238,7 +238,6 @@ public class MessageLogRepositoryTest extends TestBase {
     @SuppressWarnings("ConstantConditions")
     public void addTest_nullMessageLog() {
         expectedException.expect(NullPointerException.class);
-
         messageLogRepository.add(null);
     }
 

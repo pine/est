@@ -3,7 +3,9 @@ package moe.pine.est.log.utils;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -14,10 +16,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class MessageLogKeyBuilderTest {
+    private static final ZoneId ZONE_ID = ZoneId.of("Asia/Tokyo");
     private static final LocalDateTime DATE_1 = LocalDateTime.of(2019, 4, 26, 19, 12, 34, 0);
     private static final LocalDateTime DATE_2 = LocalDateTime.of(2019, 4, 26, 0, 0, 0, 0);
     private static final int RETENTION_DAYS_1 = 3;
     private static final int RETENTION_DAYS_2 = 5;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private MessageLogKeyBuilder keyBuilder1;
     private MessageLogKeyBuilder keyBuilder2;
@@ -25,17 +31,17 @@ public class MessageLogKeyBuilderTest {
     @Before
     public void setUp() {
         final var mustacheFactory = new DefaultMustacheFactory();
-        final var zoneId = ZoneId.of("Asia/Tokyo");
-        final var zoneOffset = zoneId.getRules().getOffset(Instant.EPOCH);
-        final var clock1 = Clock.fixed(DATE_1.toInstant(zoneOffset), zoneId);
-        final var clock2 = Clock.fixed(DATE_2.toInstant(zoneOffset), zoneId);
+        final var zoneOffset = ZONE_ID.getRules().getOffset(Instant.EPOCH);
+        final var clock1 = Clock.fixed(DATE_1.toInstant(zoneOffset), ZONE_ID);
+        final var clock2 = Clock.fixed(DATE_2.toInstant(zoneOffset), ZONE_ID);
         keyBuilder1 = new MessageLogKeyBuilder(mustacheFactory, clock1, RETENTION_DAYS_1);
         keyBuilder2 = new MessageLogKeyBuilder(mustacheFactory, clock2, RETENTION_DAYS_2);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     @SuppressWarnings("ConstantConditions")
     public void constructorTest_nullMustacheFactory() {
+        expectedException.expect(NullPointerException.class);
         new MessageLogKeyBuilder(null, Clock.systemUTC(), RETENTION_DAYS_1);
     }
 
