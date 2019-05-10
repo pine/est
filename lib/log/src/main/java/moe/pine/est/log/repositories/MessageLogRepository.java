@@ -69,7 +69,7 @@ public class MessageLogRepository {
         final String itemKey = keyBuilder.buildItemKey(dt, hash);
         final long timeout = timeoutCalculator.calc(retentionDays);
 
-        redisTemplate.opsForList().rightPush(listKey, hash);
+        redisTemplate.opsForList().leftPush(listKey, hash);
         redisTemplate.expire(listKey, timeout, TimeUnit.SECONDS);
         redisTemplate.opsForValue().set(itemKey, item, timeout, TimeUnit.SECONDS);
 
@@ -77,7 +77,7 @@ public class MessageLogRepository {
     }
 
     public int count() {
-        final var keys = keyBuilder.buildListKeys();
+        final List<String> keys = keyBuilder.buildListKeys();
         return keys.stream()
                 .map(key ->
                         Optional
@@ -89,6 +89,11 @@ public class MessageLogRepository {
 
     @Nonnull
     public List<MessageLogId> getIds(int offset, int limit) {
+        checkArgument(offset >= 0,
+                String.format("`offset` should be zero or more. The current value is %d.", offset));
+        checkArgument(limit > 0,
+                String.format("`limit` should be above zero. The current value is %d.", limit));
+
         final int maxItemLength = offset + limit;
         final ArrayList<MessageLogId> itemKeys = Lists.newArrayListWithCapacity(maxItemLength);
 
@@ -110,24 +115,26 @@ public class MessageLogRepository {
         }
 
         final int toIndex = Math.min(offset + limit, itemKeys.size());
-        return itemKeys.subList(offset, toIndex);
+        return List.copyOf(itemKeys.subList(offset, toIndex));
     }
 
     @Nullable
     public MessageLog get(
             @Nonnull final MessageLogId id
     ) throws IOException {
-        final var ids = Collections.singletonList(id);
-        final var messageLogs = get(ids);
+        final var ids = Collections.singletonList(checkNotNull(id));
+        final var messageLogs = mget(ids);
         return messageLogs.isEmpty() ? null : messageLogs.get(0).getValue();
     }
 
     @Nonnull
-    @SuppressWarnings("UnstableApiUsage")
-    public List<Pair<MessageLogId, MessageLog>> get(
+    @SuppressWarnings({"UnstableApiUsage", "ResultOfMethodCallIgnored"})
+    public List<Pair<MessageLogId, MessageLog>> mget(
             @Nonnull final List<MessageLogId> ids
     ) throws IOException {
-        if (CollectionUtils.isEmpty(ids)) {
+        checkNotNull(ids);
+
+        if (ids.isEmpty()) {
             return Collections.emptyList();
         }
 

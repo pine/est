@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class MessageLogKeyBuilder {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMMdd");
     private static final String ITEMS_KEY_PREFIX = "message:";
-    private static final String ITEMS_KEY_FORMAT = "message:{{dt}}";
+    private static final String ITEMS_KEY_FORMAT = ITEMS_KEY_PREFIX + "{{dt}}";
     private static final String ITEM_KEY_FORMAT = "message:{{dt}}:{{hash}}";
     private static final String DT_KEY = "dt";
     private static final String HASH_KEY = "hash";
@@ -32,9 +32,9 @@ public class MessageLogKeyBuilder {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public MessageLogKeyBuilder(
-        @Nonnull final MustacheFactory mustacheFactory,
-        @Nonnull final Clock clock,
-        final int retentionDays
+            @Nonnull final MustacheFactory mustacheFactory,
+            @Nonnull final Clock clock,
+            final int retentionDays
     ) {
         checkNotNull(mustacheFactory);
 
@@ -51,8 +51,8 @@ public class MessageLogKeyBuilder {
 
     @Nonnull
     public String buildItemKey(
-        final String dt,
-        final String hash
+            final String dt,
+            final String hash
     ) {
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt, HASH_KEY, hash);
@@ -63,7 +63,7 @@ public class MessageLogKeyBuilder {
 
     @Nonnull
     public String buildListKey(
-        final String dt
+            final String dt
     ) {
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt);
@@ -76,11 +76,11 @@ public class MessageLogKeyBuilder {
     public List<String> buildListKeys() {
         final var now = LocalDateTime.now(clock);
         return IntStream
-            .rangeClosed(0, retentionDays)
-            .boxed()
-            .map(days -> now.minusDays(days).format(FORMATTER))
-            .map(this::buildListKey)
-            .collect(Collectors.toUnmodifiableList());
+                .rangeClosed(0, retentionDays)
+                .boxed()
+                .map(days -> now.minusDays(days).format(FORMATTER))
+                .map(this::buildListKey)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Nonnull
