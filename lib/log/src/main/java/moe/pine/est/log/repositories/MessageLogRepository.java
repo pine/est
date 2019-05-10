@@ -78,6 +78,8 @@ public class MessageLogRepository {
 
     public int count() {
         final List<String> keys = keyBuilder.buildListKeys();
+        log.debug("Count message logs from {}", keys);
+
         return keys.stream()
                 .map(key ->
                         Optional
