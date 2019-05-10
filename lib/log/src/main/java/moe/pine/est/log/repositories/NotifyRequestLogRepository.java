@@ -49,10 +49,10 @@ public class NotifyRequestLogRepository {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void add(
-            @Nonnull MessageLogId messageLogKey,
+            @Nonnull MessageLogId messageLogId,
             @Nonnull List<NotifyRequestLog> notifyRequestLogs
     ) throws JsonProcessingException {
-        checkNotNull(messageLogKey);
+        checkNotNull(messageLogId);
         checkNotNull(notifyRequestLogs);
 
         if (CollectionUtils.isEmpty(notifyRequestLogs)) {
@@ -60,7 +60,7 @@ public class NotifyRequestLogRepository {
         }
 
         final String item = objectMapper.writeValueAsString(notifyRequestLogs);
-        final String itemsKey = buildKey(messageLogKey.getDt(), messageLogKey.getHash());
+        final String itemsKey = buildKey(messageLogId.getDt(), messageLogId.getHash());
         final long timeout = timeoutCalculator.calc(retentionDays);
 
         redisTemplate.opsForValue().set(itemsKey, item, timeout, TimeUnit.SECONDS);

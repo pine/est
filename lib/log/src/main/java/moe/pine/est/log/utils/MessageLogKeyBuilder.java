@@ -19,9 +19,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MessageLogKeyBuilder {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("YYYYMMdd");
-    private static final String ITEMS_KEY_PREFIX = "message:";
-    private static final String ITEMS_KEY_FORMAT = ITEMS_KEY_PREFIX + "{{dt}}";
-    private static final String ITEM_KEY_FORMAT = "message:{{dt}}:{{hash}}";
+    private static final String KEY_PREFIX = "message:";
+    private static final String ITEMS_KEY_FORMAT = KEY_PREFIX + "{{dt}}";
+    private static final String ITEM_KEY_FORMAT = KEY_PREFIX + "{{dt}}:{{hash}}";
     private static final String DT_KEY = "dt";
     private static final String HASH_KEY = "hash";
 
@@ -85,7 +85,7 @@ public class MessageLogKeyBuilder {
 
     @Nonnull
     public MessageLogId parseListKey(final String key) {
-        final String dt = key.substring(ITEMS_KEY_PREFIX.length());
+        final String dt = key.substring(KEY_PREFIX.length());
         return new MessageLogId(dt, null);
     }
 }

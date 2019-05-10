@@ -32,8 +32,8 @@ public class LogService {
                 .map(this::createNotifyRequestLog)
                 .collect(Collectors.toUnmodifiableList());
 
-        final var messageLogKey = messageLogRepository.add(messageLog);
-        notifyRequestLogRepository.add(messageLogKey, notifyRequestLogs);
+        final var messageLogId = messageLogRepository.add(messageLog);
+        notifyRequestLogRepository.add(messageLogId, notifyRequestLogs);
     }
 
     private MessageLog createMessageLog(
