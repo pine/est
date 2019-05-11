@@ -2,6 +2,8 @@ package moe.pine.est.controllers;
 
 import lombok.RequiredArgsConstructor;
 import moe.pine.est.converters.ViewLogConverter;
+import moe.pine.est.log.models.MessageLogId;
+import moe.pine.est.models.Log;
 import moe.pine.est.models.ViewPager;
 import moe.pine.est.services.LogService;
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,11 @@ public class MessageController {
         @Nonnull @PathVariable("dt") String dt,
         @Nonnull @PathVariable("hash") String hash
     ) {
+
+        final MessageLogId messageLogId = new MessageLogId(dt, hash);
+        final Log item = logService.find(messageLogId);
+        
+
         model.addAttribute("dt", dt);
         model.addAttribute("hash", hash);
         return "messages/show";

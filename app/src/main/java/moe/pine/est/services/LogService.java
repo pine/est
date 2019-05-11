@@ -28,14 +28,14 @@ public class LogService {
     private final NotifyRequestLogRepository notifyRequestLogRepository;
 
     public void add(
-            @Nonnull final EmailMessage message,
-            @Nonnull final List<NotifyRequest> notifyRequests
+        @Nonnull final EmailMessage message,
+        @Nonnull final List<NotifyRequest> notifyRequests
     ) throws IOException {
         final var messageLog = createMessageLog(message);
         final var notifyRequestLogs =
-                notifyRequests.stream()
-                        .map(this::createNotifyRequestLog)
-                        .collect(Collectors.toUnmodifiableList());
+            notifyRequests.stream()
+                .map(this::createNotifyRequestLog)
+                .collect(Collectors.toUnmodifiableList());
 
         final var messageLogId = messageLogRepository.add(messageLog);
         notifyRequestLogRepository.add(messageLogId, notifyRequestLogs);
@@ -52,39 +52,53 @@ public class LogService {
         }
 
         return messageLogs.stream()
-                .map(v -> Log.builder()
-                        .messageLogId(v.getKey())
-                        .messageLog(v.getValue())
-                        .notifyRequestLogs(Collections.emptyList())
-                        .build())
-                .collect(Collectors.toUnmodifiableList());
+            .map(v -> Log.builder()
+                .messageLogId(v.getKey())
+                .messageLog(v.getValue())
+                .notifyRequestLogs(Collections.emptyList())
+                .build())
+            .collect(Collectors.toUnmodifiableList());
     }
 
     public int count() {
         return messageLogRepository.count();
     }
 
+    public Log find(@Nonnull final MessageLogId messageLogId) {
+        final MessageLog messageLog;
+        try {
+            messageLog = messageLogRepository.get(messageLogId);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+
+        return Log.builder()
+            .messageLogId(messageLogId)
+            .messageLog(messageLog)
+            .build();
+    }
+
     private MessageLog createMessageLog(
-            @Nonnull final EmailMessage message
+        @Nonnull final EmailMessage message
     ) {
         return MessageLog.builder()
-                .recipient(message.getRecipient())
-                .sender(message.getSender())
-                .from(message.getFrom())
-                .subject(message.getSubject())
-                .bodyPlain(message.getBodyPlain())
-                .strippedText(message.getStrippedText())
-                .strippedSignature(message.getStrippedSignature())
-                .bodyHtml(message.getBodyHtml())
-                .strippedHtml(message.getStrippedHtml())
-                .timestamp(message.getTimestamp())
-                .token(message.getToken())
-                .signature(message.getSignature())
-                .build();
+            .recipient(message.getRecipient())
+            .sender(message.getSender())
+            .from(message.getFrom())
+            .subject(message.getSubject())
+            .bodyPlain(message.getBodyPlain())
+            .strippedText(message.getStrippedText())
+            .strippedSignature(message.getStrippedSignature())
+            .bodyHtml(message.getBodyHtml())
+            .strippedHtml(message.getStrippedHtml())
+            .timestamp(message.getTimestamp())
+            .token(message.getToken())
+            .signature(message.getSignature())
+            .build();
     }
 
     private NotifyRequestLog createNotifyRequestLog(
-            @Nonnull final NotifyRequest notifyRequest
+        @Nonnull final NotifyRequest notifyRequest
     ) {
         return NotifyRequestLog.builder().build();
     }
