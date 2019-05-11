@@ -1,5 +1,5 @@
 <#ftl strip_whitespace=true>
-<#-- @ftlvariable name="items" type="java.util.List<moe.pine.est.models.Log>" -->
+<#-- @ftlvariable name="items" type="java.util.List<moe.pine.est.models.ViewLog>" -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -10,7 +10,8 @@
 <body>
 
 <#list items as item>
-  ${item.messageLogId.dt}
+  ${item.dt}
+  ${item.hash}
 </#list>
 
 </body>
