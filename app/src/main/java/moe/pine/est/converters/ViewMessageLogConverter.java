@@ -30,6 +30,7 @@ public class ViewMessageLogConverter {
             .strippedText(StringUtils.defaultString(messageLog.getStrippedText()))
             .strippedSignature(StringUtils.defaultString(messageLog.getStrippedSignature()))
             .bodyHtml(StringUtils.defaultString(messageLog.getBodyHtml()))
+            .strippedHtml(StringUtils.defaultString(messageLog.getStrippedHtml()))
             .timestamp(timestamp)
             .token(StringUtils.defaultString(messageLog.getToken()))
             .signature(StringUtils.defaultString(messageLog.getSignature()))

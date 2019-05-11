@@ -9,43 +9,47 @@
     <table class="table table-striped">
       <tr>
         <th>Recipient</th>
-        <td>${log.messageLog.recipient}</td>
+        <td>${log.messageLog.recipient?html}</td>
       </tr>
       <tr>
         <th>Sender</th>
-        <td>${log.messageLog.sender}</td>
+        <td>${log.messageLog.sender?html}</td>
       </tr>
       <tr>
         <th>From</th>
-        <td>${log.messageLog.from}</td>
+        <td>${log.messageLog.from?html}</td>
       </tr>
       <tr>
         <th>Subject</th>
-        <td>${log.messageLog.subject}</td>
+        <td>${log.messageLog.subject?html}</td>
       </tr>
       <tr>
         <th>Body plain</th>
-        <td>${log.messageLog.bodyPlain}</td>
+        <td>${log.messageLog.bodyPlain?html}</td>
       </tr>
       <tr>
         <th>Stripped text</th>
-        <td>${log.messageLog.strippedText}</td>
+        <td>${log.messageLog.strippedText?html}</td>
       </tr>
       <tr>
         <th>Stripped signature</th>
-        <td>${log.messageLog.strippedSignature}</td>
+        <td>${log.messageLog.strippedSignature?html}</td>
       </tr>
       <tr>
         <th>Body HTML</th>
-        <td>${log.messageLog.bodyHtml}</td>
+        <td>${log.messageLog.bodyHtml?html}</td>
       </tr>
       <tr>
         <th>Stripped HTML</th>
-        <td>${log.messageLog.strippedHtml}</td>
+        <td>${log.messageLog.strippedHtml?html}</td>
       </tr>
       <tr>
         <th>Date</th>
         <td>${log.messageLog.timestamp}</td>
+      </tr>
+      <tr>
+        <th>Token</th>
+        <td>${log.messageLog.token}</td>
       </tr>
     </table>
   </div>
