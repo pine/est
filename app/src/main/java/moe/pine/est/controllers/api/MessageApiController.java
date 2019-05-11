@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.OK;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class MessageController {
+public class MessageApiController {
     @Nonnull
     private EmailService emailService;
 
