@@ -20,7 +20,6 @@ public class ViewLogConverter {
         return ViewLog.builder()
             .dt(log.getMessageLogId().getDt())
             .hash(log.getMessageLogId().getHash())
-            .subject(log.getMessageLog().getSubject())
             .messageLog(messageLog)
             .build();
     }
