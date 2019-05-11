@@ -1,5 +1,5 @@
 <#ftl strip_whitespace=true>
-<#-- @ftlvariable name="items" type="java.util.List<moe.pine.est.models.ViewLog>" -->
+<#-- @ftlvariable name="logs" type="java.util.List<moe.pine.est.models.ViewLog>" -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -22,10 +22,11 @@
 <div class="container">
   <table class="table table-striped">
     <tbody>
-    <#list items as item>
+    <#list logs as log>
       <tr>
-        <td><a href="${item.path}" rel="bookmark">${item.subject}</a></td>
-        <td>${item.timestamp}</td>
+        <td><a href="${log.path}" rel="bookmark">${log.subject}</a></td>
+        <td>${log.messageLog.from}</td>
+        <td>${log.messageLog.timestamp}</td>
       </tr>
     </#list>
     </tbody>

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import moe.pine.est.converters.ViewLogConverter;
 import moe.pine.est.log.models.MessageLogId;
 import moe.pine.est.models.Log;
+import moe.pine.est.models.ViewLog;
 import moe.pine.est.models.ViewPager;
 import moe.pine.est.services.LogService;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class MessageController {
     ) {
         final int page = 0;
         final int maxItems = logService.count();
-        final var items = logService
+        final var logs = logService
             .filter(PER_PAGE * page, PER_PAGE)
             .stream()
             .map(viewLogConverter::convert)
@@ -39,7 +40,7 @@ public class MessageController {
             .maxItems(maxItems)
             .build();
 
-        model.addAttribute("items", items);
+        model.addAttribute("logs", logs);
         model.addAttribute("pager", pager);
         return "messages/index";
     }
@@ -52,11 +53,11 @@ public class MessageController {
     ) {
 
         final MessageLogId messageLogId = new MessageLogId(dt, hash);
-        final Log item = logService.find(messageLogId);
-        
+        final ViewLog log = viewLogConverter.convert(logService.find(messageLogId));
 
         model.addAttribute("dt", dt);
         model.addAttribute("hash", hash);
+        model.addAttribute("log", log);
         return "messages/show";
     }
 }

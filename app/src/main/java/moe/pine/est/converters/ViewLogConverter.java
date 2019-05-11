@@ -1,30 +1,27 @@
 package moe.pine.est.converters;
 
+import lombok.RequiredArgsConstructor;
 import moe.pine.est.models.Log;
 import moe.pine.est.models.ViewLog;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 @Component
+@RequiredArgsConstructor
 public class ViewLogConverter {
-    private static final ZoneOffset ZONE_OFFSET =
-        ZoneId.of("Asia/Tokyo").getRules().getOffset(Instant.EPOCH);
+    private final ViewMessageLogConverter viewMessageLogConverter;
 
     @Nonnull
     public ViewLog convert(@Nonnull final Log log) {
-        final var instant = Instant.ofEpochSecond(log.getMessageLog().getTimestamp());
-        final var timestamp = LocalDateTime.ofInstant(instant, ZONE_OFFSET);
+
+        final var messageLog = viewMessageLogConverter.convert(log.getMessageLog());
 
         return ViewLog.builder()
             .dt(log.getMessageLogId().getDt())
             .hash(log.getMessageLogId().getHash())
             .subject(log.getMessageLog().getSubject())
-            .timestamp(timestamp)
+            .messageLog(messageLog)
             .build();
     }
 }
