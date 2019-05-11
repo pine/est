@@ -7,6 +7,7 @@ import moe.pine.est.services.LogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Nonnull;
 import java.util.stream.Collectors;
@@ -38,6 +39,17 @@ public class MessageController {
 
         model.addAttribute("items", items);
         model.addAttribute("pager", pager);
-        return "messages";
+        return "messages/index";
+    }
+
+    @GetMapping("/messages/{dt}/{hash}")
+    public String show(
+        @Nonnull final Model model,
+        @Nonnull @PathVariable("dt") String dt,
+        @Nonnull @PathVariable("hash") String hash
+    ) {
+        model.addAttribute("dt", dt);
+        model.addAttribute("hash", hash);
+        return "messages/show";
     }
 }
