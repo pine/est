@@ -25,6 +25,7 @@
   <#list items as item>
     <tr>
       <td><a href="${item.path}">${item.subject}</a></td>
+      <td>${item.timestamp}</td>
     </tr>
   </#list>
   </tbody>
