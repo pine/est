@@ -6,6 +6,8 @@ spring:
     database: 1
 
 app:
+  username: admin
+  password: password
   site-url: https://github.com/pine/est
 
 connpass:
