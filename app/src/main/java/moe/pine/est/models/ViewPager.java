@@ -18,12 +18,12 @@ public class ViewPager {
 
     @Nullable
     public ViewPage getPrevPage() {
-        return paginate(page.getPage() - 1);
+        return paginate(page.getIndex() - 1);
     }
 
     @Nullable
     public ViewPage getNextPage() {
-        return paginate(page.getPage() + 1);
+        return paginate(page.getIndex() + 1);
     }
 
     @Nullable
@@ -34,7 +34,7 @@ public class ViewPager {
         if (page > getMaxPage()) {
             return null;
         }
-        return ViewPage.builder().page(page).build();
+        return ViewPage.builder().index(page).build();
     }
 
     public List<ViewPage> getPages() {

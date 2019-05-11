@@ -6,12 +6,12 @@ import lombok.Data;
 @Data
 @Builder
 public class ViewPage {
-    private final int page;
+    private final int index;
 
     public String getQuery() {
-        if (page == 0) {
+        if (index == 0) {
             return "";
         }
-        return "?page=" + page;
+        return "?page=" + index;
     }
 }
