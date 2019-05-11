@@ -1,5 +1,6 @@
-package moe.pine.est.models;
+package moe.pine.est.resolvers;
 
+import moe.pine.est.models.MessageRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -44,10 +45,10 @@ public class MessageRequestArgumentResolver implements HandlerMethodArgumentReso
             .sender(webRequest.getParameter("sender"))
             .from(webRequest.getParameter("from"))
             .subject(webRequest.getParameter("subject"))
-            .bodyPlain(webRequest.getParameter("text-plain"))
+            .bodyPlain(webRequest.getParameter("body-plain"))
             .strippedText(webRequest.getParameter("stripped-text"))
             .strippedSignature(webRequest.getParameter("stripped-signature"))
-            .bodyHtml(webRequest.getParameter("text-html"))
+            .bodyHtml(webRequest.getParameter("body-html"))
             .strippedHtml(webRequest.getParameter("stripped-html"))
             .timestamp(timestamp)
             .token(token)

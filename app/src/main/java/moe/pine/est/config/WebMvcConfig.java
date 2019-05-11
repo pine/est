@@ -3,7 +3,7 @@ package moe.pine.est.config;
 import lombok.RequiredArgsConstructor;
 import moe.pine.est.interceptors.CacheInterceptor;
 import moe.pine.est.interceptors.NoCacheInterceptor;
-import moe.pine.est.models.MessageRequestArgumentResolver;
+import moe.pine.est.resolvers.MessageRequestArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
