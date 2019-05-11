@@ -7,10 +7,19 @@
 <@base.page layout=layout>
   <div class="container">
     <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Subject</th>
+        <th>From</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tfoot>
+      </tfoot>
       <tbody>
       <#list logs as log>
         <tr>
-          <td><a href="${log.path}" rel="bookmark">${log.subject}</a></td>
+          <td><a href="${log.path}" rel="bookmark">${log.messageLog.subject}</a></td>
           <td>${log.messageLog.from?html}</td>
           <td>${log.messageLog.timestamp}</td>
         </tr>
