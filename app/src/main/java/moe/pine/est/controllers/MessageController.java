@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-public class DashboardController {
+public class MessageController {
     private static final int PER_PAGE = 50;
 
     private final LogService logService;
     private final ViewLogConverter viewLogConverter;
 
-    @GetMapping("/dashboard")
-    public String dashboard(
+    @GetMapping("/messages")
+    public String index(
         @Nonnull final Model model
     ) {
         final int page = 0;
@@ -38,6 +38,6 @@ public class DashboardController {
 
         model.addAttribute("items", items);
         model.addAttribute("pager", pager);
-        return "dashboard";
+        return "messages";
     }
 }

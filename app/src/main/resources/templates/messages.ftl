@@ -19,18 +19,18 @@
           crossorigin="anonymous"></script>
 </head>
 <body>
-
-<table class="table table-striped">
-  <tbody>
-  <#list items as item>
-    <tr>
-      <td><a href="${item.path}">${item.subject}</a></td>
-      <td>${item.timestamp}</td>
-    </tr>
-  </#list>
-  </tbody>
-</table>
-
+<div class="container">
+  <table class="table table-striped">
+    <tbody>
+    <#list items as item>
+      <tr>
+        <td><a href="${item.path}" rel="bookmark">${item.subject}</a></td>
+        <td>${item.timestamp}</td>
+      </tr>
+    </#list>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>
