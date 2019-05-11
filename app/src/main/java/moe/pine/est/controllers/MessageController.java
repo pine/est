@@ -56,8 +56,8 @@ public class MessageController {
     @GetMapping("/messages/{dt}/{hash}")
     public String detail(
         @Nonnull final Model model,
-        @Nonnull @PathVariable("dt") String dt,
-        @Nonnull @PathVariable("hash") String hash
+        @Nonnull @PathVariable("dt") final String dt,
+        @Nonnull @PathVariable("hash") final String hash
     ) {
 
         final MessageLogId messageLogId = new MessageLogId(dt, hash);
