@@ -21,8 +21,17 @@ public class ViewMessageLogConverter {
         final var timestamp = LocalDateTime.ofInstant(instant, ZONE_OFFSET);
 
         return ViewMessageLog.builder()
+            .recipient(messageLog.getRecipient())
+            .sender(messageLog.getSender())
             .from(messageLog.getFrom())
+            .subject(messageLog.getSubject())
+            .bodyPlain(messageLog.getBodyPlain())
+            .strippedText(messageLog.getStrippedText())
+            .strippedSignature(messageLog.getStrippedSignature())
+            .bodyHtml(messageLog.getBodyHtml())
             .timestamp(timestamp)
+            .token(messageLog.getToken())
+            .signature(messageLog.getSignature())
             .build();
     }
 }

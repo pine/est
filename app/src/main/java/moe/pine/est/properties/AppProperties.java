@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("app")
 public class AppProperties {
     private String siteUrl;
+    private String siteTitle;
     private String username;
     private String password;
 }
