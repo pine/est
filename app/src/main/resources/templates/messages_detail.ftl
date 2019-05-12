@@ -25,7 +25,7 @@
       </tr>
       <tr>
         <th>Body plain</th>
-        <td>${log.messageLog.bodyPlain?html}</td>
+        <td>${log.messageLog.bodyPlain?html?replace('\r?\n', '<br>')}</td>
       </tr>
       <tr>
         <th>Stripped text</th>
