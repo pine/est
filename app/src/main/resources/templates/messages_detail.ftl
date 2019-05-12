@@ -49,7 +49,7 @@
       </tr>
       <tr>
         <th>Token</th>
-        <td>${log.messageLog.token}</td>
+        <td>${log.messageLog.token?html}</td>
       </tr>
     </table>
   </div>
