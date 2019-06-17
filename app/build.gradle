@@ -29,4 +29,5 @@ dependencies {
 
     // Utilities
     implementation 'com.github.spullara.mustache.java:compiler'
+    implementation 'moe.pine:heroku-addons'
 }

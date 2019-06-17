@@ -70,6 +70,7 @@ subprojects {
             // Utilities
             dependency "com.github.spullara.mustache.java:compiler:0.9.6"
             dependency 'com.sangupta:murmur:1.0.0'
+            dependency 'moe.pine:heroku-addons:0.2.1'
 
             // Redis
             dependency "io.lettuce:lettuce-core:$lettuceVersion"
