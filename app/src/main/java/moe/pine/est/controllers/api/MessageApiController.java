@@ -62,10 +62,14 @@ public class MessageApiController {
             log.info("New notify requests created :: {}", notifyRequests);
         }
 
-        notifyRequests
-            .stream()
-            .map(slackService::newMessage)
-            .forEach(slackService::postMessage);
+        try {
+            notifyRequests
+                .stream()
+                .map(slackService::newMessage)
+                .forEach(slackService::postMessage);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             logService.add(message, notifyRequests);
