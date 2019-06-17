@@ -67,7 +67,12 @@ public class MessageApiController {
             .map(slackService::newMessage)
             .forEach(slackService::postMessage);
 
-        logService.add(message, notifyRequests);
+        try {
+            logService.add(message, notifyRequests);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+
         response.getWriter().write(OK.getReasonPhrase());
     }
 }
