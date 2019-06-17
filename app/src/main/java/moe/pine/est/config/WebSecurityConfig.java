@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    /*
     private final AppProperties appProperties;
 
     @Bean
@@ -26,20 +25,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .mvcMatchers(HttpMethod.GET, "/")
-                .mvcMatchers(HttpMethod.GET, "/health")
-                .mvcMatchers(HttpMethod.POST, "/api/messages");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated();
+            .authorizeRequests()
+            .antMatchers("/", "/health", "/api/messages").permitAll()
+            .anyRequest().authenticated();
         http.httpBasic();
         http.csrf().disable();
     }
@@ -47,11 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .withUser(appProperties.getUsername())
-                .password("{noop}" + appProperties.getPassword())
-                .roles("USER");
+            .inMemoryAuthentication()
+            .withUser(appProperties.getUsername())
+            .password("{noop}" + appProperties.getPassword())
+            .roles("USER");
     }
-   
-     */
 }
