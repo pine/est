@@ -1,5 +1,5 @@
 # est &nbsp;[![CircleCI](https://circleci.com/gh/pine/est.svg?style=shield&circle-token=5da684fe3eb45157e7b6069434a82bf37c95fa0f)](https://circleci.com/gh/pine/est)
-:mailbox: The cute email notification system for Slack V2.
+:mailbox: The cute email notification system V2 for Slack.
 
 ## Requirements
 
