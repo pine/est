@@ -25,6 +25,7 @@ public class MessageController {
     private final LogService logService;
     private final ViewLogConverter viewLogConverter;
 
+    /*
     @GetMapping("/messages")
     public String index(
         @Nonnull final Model model
@@ -73,4 +74,5 @@ public class MessageController {
         model.addAttribute("hash", hash);
         return "messages_detail";
     }
+     */
 }

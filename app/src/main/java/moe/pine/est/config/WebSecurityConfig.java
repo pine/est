@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    /*
     private final AppProperties appProperties;
 
     @Bean
@@ -51,4 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password("{noop}" + appProperties.getPassword())
                 .roles("USER");
     }
+   
+     */
 }
