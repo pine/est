@@ -25,6 +25,9 @@ OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.2+9, mixed mode)
 [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is required.
 
 ```bash
+# Create a new Heroku app
+$ heroku apps:create your-app
+
 # Setup environment variables
 $ heroku config:set "JAVA_OPTS=-XX:+UseStringDeduplication"
 $ heroku config:set "SPRING_PROFILES_ACTIVE=prod"
@@ -32,7 +35,11 @@ $ heroku config:set "TZ=Asia/Tokyo"
 
 # Setup Redis
 $ heroku addons:create heroku-redis:hobby-dev
-$ heroku config | fgrep REDIS_URL
+
+# Deploy JAR file
+$ ./gradlew build
+$ heroku plugins:install java
+$ heroku deploy:jar --jar app/build/libs/app.jar --jdk 11
 ```
 
 ## License
