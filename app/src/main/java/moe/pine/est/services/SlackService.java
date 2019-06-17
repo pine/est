@@ -22,7 +22,7 @@ public class SlackService {
 
     @Nonnull
     public SlackMessage newMessage(
-            @Nonnull NotifyRequest notifyRequest
+        @Nonnull NotifyRequest notifyRequest
     ) {
         final String notificationGroupId = notifyRequest.getNotificationGroupId();
         if (StringUtils.isEmpty(notificationGroupId)) {
@@ -30,29 +30,30 @@ public class SlackService {
         }
 
         final var notificationGroupOpt =
-                slackProperties.getNotificationGroups()
-                        .stream()
-                        .filter(v -> StringUtils.equals(v.getId(), notificationGroupId))
-                        .findFirst();
+            slackProperties.getNotificationGroups()
+                .stream()
+                .filter(v -> StringUtils.equals(v.getId(), notificationGroupId))
+                .findFirst();
 
         if (notificationGroupOpt.isEmpty()) {
             throw new RuntimeException(
-                    String.format(
-                            "A notification group `%s` is not found.",
-                            notificationGroupId));
+                String.format(
+                    "A notification group `%s` is not found.",
+                    notificationGroupId));
         }
 
         final var notificationGroup = notificationGroupOpt.get();
         return SlackMessage.builder()
-                .token(notificationGroup.getToken())
-                .channel(notificationGroup.getChannel())
-                .text(notifyRequest.getText())
-                .iconUrl(notificationGroup.getIconUrl())
-                .build();
+            .token(notificationGroup.getToken())
+            .channel(notificationGroup.getChannel())
+            .username(notificationGroup.getUsername())
+            .iconUrl(notificationGroup.getIconUrl())
+            .text(notifyRequest.getText())
+            .build();
     }
 
     public void postMessage(
-            @Nonnull SlackMessage message
+        @Nonnull SlackMessage message
     ) {
         slack.postMessage(checkNotNull(message));
     }

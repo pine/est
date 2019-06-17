@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class SlackMessage {
     private String token;
     private String channel;
-    private String text;
+    private String username;
     private String iconUrl;
+    private String text;
 }
