@@ -10,6 +10,7 @@ import moe.pine.est.services.EmailService;
 import moe.pine.est.services.LogService;
 import moe.pine.est.services.ProcessorService;
 import moe.pine.est.services.SlackService;
+import moe.pine.est.slack.models.SlackMessage;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
@@ -62,19 +64,21 @@ public class MessageApiController {
             log.info("New notify requests created :: {}", notifyRequests);
         }
 
-        try {
+        final List<SlackMessage> slackMessages =
             notifyRequests
                 .stream()
                 .map(slackService::newMessage)
-                .forEach(slackService::postMessage);
-        } catch (final Exception e) {
-            e.printStackTrace();
+                .collect(Collectors.toUnmodifiableList());
+        try {
+            slackMessages.forEach(slackService::postMessage);
+        } catch (final Throwable e) {
+            log.error("Cannot send messages to Slack :: messages={}", slackMessages, e);
         }
 
         try {
             logService.add(message, notifyRequests);
-        } catch (final Exception e) {
-            e.printStackTrace();
+        } catch (final Throwable e) {
+            log.error("Cannot save logs :: message={}, notify-requests={}", message, notifyRequests, e);
         }
 
         response.getWriter().write(OK.getReasonPhrase());

@@ -100,6 +100,9 @@ public class LogService {
     private NotifyRequestLog createNotifyRequestLog(
         @Nonnull final NotifyRequest notifyRequest
     ) {
-        return NotifyRequestLog.builder().build();
+        return NotifyRequestLog.builder()
+            .notificationGroupId(notifyRequest.getNotificationGroupId())
+            .text(notifyRequest.getText())
+            .build();
     }
 }
