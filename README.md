@@ -9,7 +9,7 @@
 ## Getting started
 
 ```
-$ ./gradlew :app:bootJar
+$ ./gradlew :app:bootRun
 ```
 
 ## Development
@@ -37,7 +37,7 @@ $ heroku config:set "TZ=Asia/Tokyo"
 $ heroku addons:create heroku-redis:hobby-dev
 
 # Deploy JAR file
-$ ./gradlew build
+$ ./gradlew :app:bootJar
 $ heroku plugins:install java
 $ heroku deploy:jar --jar app/build/libs/app.jar --jdk 11
 ```
