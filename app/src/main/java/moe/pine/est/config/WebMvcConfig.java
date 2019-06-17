@@ -1,9 +1,8 @@
 package moe.pine.est.config;
 
 import lombok.RequiredArgsConstructor;
-import moe.pine.est.interceptors.CacheInterceptor;
-import moe.pine.est.interceptors.NoCacheInterceptor;
 import moe.pine.est.resolvers.MessageRequestArgumentResolver;
+import moe.pine.spring.cache.interceptors.CacheInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,7 +15,7 @@ import java.util.List;
 public class WebMvcConfig implements WebMvcConfigurer {
     private final MessageRequestArgumentResolver messageRequestArgumentResolver;
     private final CacheInterceptor cacheInterceptor;
-    private final NoCacheInterceptor noCacheInterceptor;
+    private final CacheInterceptor noCacheInterceptor;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

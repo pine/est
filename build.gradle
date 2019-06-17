@@ -35,6 +35,7 @@ allprojects {
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url 'http://repository.jboss.org/nexus/content/groups/public/' }
+        maven { url 'https://dl.bintray.com/pinemz/maven/' }
     }
 
 
@@ -71,7 +72,8 @@ subprojects {
             dependency "com.github.spullara.mustache.java:compiler:0.9.6"
             dependency 'com.sangupta:murmur:1.0.0'
             dependency 'moe.pine:heroku-addons:0.2.1'
-
+            dependency 'moe.pine:spring-cache-interceptors:0.1.0'
+            
             // Redis
             dependency "io.lettuce:lettuce-core:$lettuceVersion"
 
