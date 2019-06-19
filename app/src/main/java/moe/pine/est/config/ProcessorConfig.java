@@ -7,9 +7,8 @@ import moe.pine.est.utils.ProcessorUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 @Configuration
@@ -17,8 +16,8 @@ import java.util.List;
 public class ProcessorConfig {
     @Bean
     public CompositeProcessor compositeProcessor(
-            @Nullable final List<Processor> processors,
-            @Nonnull final ProcessorUtils processorUtils
+        @Nullable final List<Processor> processors,
+        final ProcessorUtils processorUtils
     ) {
         final var enabledProcessors = processorUtils.filterEnabled(processors);
         if (CollectionUtils.isEmpty(enabledProcessors)) {

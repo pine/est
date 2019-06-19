@@ -7,14 +7,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Nonnull;
-
 @Configuration
 @EnableConfigurationProperties(MailgunProperties.class)
 public class EmailConfig {
     @Bean
     public EmailVerifier emailVerifier(
-        @Nonnull final MailgunProperties mailgunProperties
+        final MailgunProperties mailgunProperties
     ) {
         final String apiKey = mailgunProperties.getApiKey();
         if (StringUtils.isEmpty(apiKey)) {
