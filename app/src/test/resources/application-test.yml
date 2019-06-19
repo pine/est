@@ -6,22 +6,26 @@ spring:
     database: 1
 
 app:
+  site-title: Est
+  site-url: https://github.com/pine/est
   username: admin
   password: password
-  site-url: https://github.com/pine/est
+
+mailgun:
+  api-key: key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+slack:
+  notification-groups: []
 
 connpass:
   staff:
     message-formats:
       joined-format: '「 {{name}} 」さんがイベント「 {{event}} 」へ参加申し込みしました。'
-      left-format: ''
+      left-format: '「 {{name}} 」さんがイベント「 {{event}} 」をキャンセルしました。'
     notifications:
       - group-id: group-id
         notification-group-ids:
           - notification-group-id
-
-mailgun:
-  api-key: key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 log:
   retention-days: 3
