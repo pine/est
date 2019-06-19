@@ -1,6 +1,3 @@
 [submodule "conf"]
 	path = conf
 	url = git@github.com:pine/est-conf.git
-[submodule "processors"]
-	path = processors
-	url = git@github.com:pine/est-processors.git
