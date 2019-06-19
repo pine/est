@@ -1,0 +1,13 @@
+dependencies {
+    // Sub-projects
+    implementation project(':lib-email')
+    implementation project(':lib-connpass')
+    implementation project(':lib-processor')
+
+    // Spring Framework
+    implementation 'org.springframework:spring-context'
+
+    // Utilities
+    implementation 'com.github.spullara.mustache.java:compiler'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+}

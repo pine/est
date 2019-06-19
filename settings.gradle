@@ -26,7 +26,3 @@ project(':lib-slack').projectDir = new File(settingsDir, 'lib/slack')
 
 include ':processors-connpass'
 project(':processors-connpass').projectDir = new File(settingsDir, 'processors/connpass')
-
-// include ':processors-me'
-// project(':processors-me').projectDir = new File(settingsDir, 'processors/me')
-
