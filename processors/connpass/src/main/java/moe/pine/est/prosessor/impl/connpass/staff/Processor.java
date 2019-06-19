@@ -8,7 +8,6 @@ import moe.pine.est.processor.NotifyRequest;
 import moe.pine.est.processor.ProcessorEnabled;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -16,8 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Component
 @ProcessorEnabled
@@ -31,19 +28,17 @@ public class Processor implements moe.pine.est.processor.Processor {
     private final NotificationFactory notificationFactory;
 
     public Processor(
-        @Qualifier("connpassNotifications") @NonNull final List<ConnpassNotification> notifications,
-        @NonNull final MessageParser messageParser,
-        @NonNull final NotificationFactory notificationFactory
+        @Qualifier("connpassNotifications") final List<ConnpassNotification> notifications,
+        final MessageParser messageParser,
+        final NotificationFactory notificationFactory
     ) {
-        this.notifications = checkNotNull(notifications);
-        this.messageParser = checkNotNull(messageParser);
-        this.notificationFactory = checkNotNull(notificationFactory);
+        this.notifications = Objects.requireNonNull(notifications);
+        this.messageParser = Objects.requireNonNull(messageParser);
+        this.notificationFactory = Objects.requireNonNull(notificationFactory);
     }
 
-    @NonNull
     @Override
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public List<NotifyRequest> execute(@NonNull EmailMessage message) {
+    public List<NotifyRequest> execute(final EmailMessage message) {
         Objects.requireNonNull(message);
 
         if (!message.getFrom().contains(CONNPASS_EMAIL)) {

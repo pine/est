@@ -8,14 +8,11 @@ import moe.pine.est.processor.NotifyRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.google.common.base.Preconditions.checkState;
 
 
 @Component
@@ -28,10 +25,9 @@ public class NotificationFactory {
     private final MustacheFactory mustacheFactory;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    @Nonnull
     public List<NotifyRequest> create(
-        @Nonnull ParserResult parserResult,
-        @Nonnull List<String> notificationGroupIds
+        ParserResult parserResult,
+        List<String> notificationGroupIds
     ) {
         Objects.requireNonNull(parserResult);
         Objects.requireNonNull(notificationGroupIds);
@@ -51,7 +47,13 @@ public class NotificationFactory {
                         String.valueOf(parserResult.getAction())));
         }
 
-        checkState(StringUtils.isNotEmpty(format));
+        if (StringUtils.isNotEmpty(format)) {
+            throw new RuntimeException(
+                String.format(
+                    "A message format should not be empty. :: action=%s, message-formats=%s",
+                    String.valueOf(parserResult.getAction()),
+                    messageFormats));
+        }
 
         final var reader = new StringReader(format);
         final var writer = new StringWriter();

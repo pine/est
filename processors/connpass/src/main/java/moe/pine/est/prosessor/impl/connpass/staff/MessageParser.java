@@ -7,10 +7,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.email.models.EmailMessage;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,8 +34,8 @@ public class MessageParser {
     @Nullable
     @SneakyThrows(JsonProcessingException.class)
     public ParserResult parse(
-        @Nonnull final EmailMessage message,
-        @Nonnull final String groupId
+        final EmailMessage message,
+        final String groupId
     ) {
         final String bodyHtml =
             Optional.ofNullable(message.getBodyHtml())
