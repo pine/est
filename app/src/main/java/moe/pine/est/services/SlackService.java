@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @Service
 @Slf4j
 public class SlackService {
@@ -65,7 +63,8 @@ public class SlackService {
     public void postMessage(
         final SlackMessage message
     ) {
-        executorService.execute(() ->
-            slack.postMessage(checkNotNull(message)));
+        Objects.requireNonNull(message);
+
+        executorService.execute(() -> slack.postMessage(message));
     }
 }
