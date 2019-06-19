@@ -1,28 +1,38 @@
 package moe.pine.est.services;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.pine.est.processor.NotifyRequest;
 import moe.pine.est.properties.SlackProperties;
 import moe.pine.est.slack.Slack;
 import moe.pine.est.slack.models.SlackMessage;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class SlackService {
     private final SlackProperties slackProperties;
     private final Slack slack;
+    private final ExecutorService executorService;
 
-    @Nonnull
+    public SlackService(
+        final SlackProperties slackProperties,
+        final Slack slack,
+        @Qualifier("slackExecutorService") final ExecutorService executorService
+    ) {
+        this.slackProperties = Objects.requireNonNull(slackProperties);
+        this.slack = Objects.requireNonNull(slack);
+        this.executorService = Objects.requireNonNull(executorService);
+    }
+
     public SlackMessage newMessage(
-        @Nonnull NotifyRequest notifyRequest
+        final NotifyRequest notifyRequest
     ) {
         final String notificationGroupId = notifyRequest.getNotificationGroupId();
         if (StringUtils.isEmpty(notificationGroupId)) {
@@ -53,8 +63,9 @@ public class SlackService {
     }
 
     public void postMessage(
-        @Nonnull SlackMessage message
+        final SlackMessage message
     ) {
-        slack.postMessage(checkNotNull(message));
+        executorService.execute(() ->
+            slack.postMessage(checkNotNull(message)));
     }
 }
