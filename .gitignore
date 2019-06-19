@@ -2,6 +2,7 @@
 .idea/
 build/
 out/
+*.iml
 
 /app/src/main/resources/application-local.yml
 /app/src/main/resources/application-prod.yml
