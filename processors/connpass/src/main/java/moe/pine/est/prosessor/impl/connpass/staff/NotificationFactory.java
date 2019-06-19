@@ -47,7 +47,7 @@ public class NotificationFactory {
                         String.valueOf(parserResult.getAction())));
         }
 
-        if (StringUtils.isNotEmpty(format)) {
+        if (StringUtils.isEmpty(format)) {
             throw new RuntimeException(
                 String.format(
                     "A message format should not be empty. :: action=%s, message-formats=%s",
