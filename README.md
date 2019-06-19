@@ -4,6 +4,11 @@
 
 :mailbox: The cute email notification system V2 for Slack.
 
+![](images/resized.jpg)<br>
+<sup><sup>&copy; milla74/123RF.COM</sup></sup>
+<br>
+<br>
+
 ## Requirements
 
 - JDK 11 or later
