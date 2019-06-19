@@ -7,21 +7,17 @@ import moe.pine.est.processor.CompositeProcessor;
 import moe.pine.est.processor.NotifyRequest;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nonnull;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ProcessorService {
-    @Nonnull
     private final CompositeProcessor processor;
 
-    @Nonnull
     public List<NotifyRequest> execute(final EmailMessage message) {
-        checkNotNull(message);
+        Objects.requireNonNull(message);
 
         return processor.execute(message);
     }
