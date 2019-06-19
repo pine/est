@@ -15,7 +15,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -29,22 +28,15 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 @Slf4j
 public class MessageApiController {
-    @Nonnull
-    private EmailService emailService;
-
-    @Nonnull
-    private ProcessorService processorService;
-
-    @Nonnull
-    private SlackService slackService;
-
-    @Nonnull
-    private LogService logService;
+    private final EmailService emailService;
+    private final ProcessorService processorService;
+    private final SlackService slackService;
+    private final LogService logService;
 
     @PostMapping("/api/messages")
     public void create(
-        @Nonnull final MessageRequest messageRequest,
-        @Nonnull final HttpServletResponse response
+        final MessageRequest messageRequest,
+        final HttpServletResponse response
     ) throws IOException {
         log.info(
             "New email message received :: from=\"{}\", subject=\"{}\"",

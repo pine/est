@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.annotation.Nonnull;
 import java.util.stream.Collectors;
 
 @Controller
@@ -26,9 +25,7 @@ public class MessageController {
     private final ViewLogConverter viewLogConverter;
 
     @GetMapping("/messages")
-    public String index(
-        @Nonnull final Model model
-    ) {
+    public String index(final Model model) {
         final int page = 0;
         final int maxItems = logService.count();
         final var logs = logService
@@ -55,9 +52,9 @@ public class MessageController {
 
     @GetMapping("/messages/{dt}/{hash}")
     public String detail(
-        @Nonnull final Model model,
-        @Nonnull @PathVariable("dt") final String dt,
-        @Nonnull @PathVariable("hash") final String hash
+        final Model model,
+        @PathVariable("dt") final String dt,
+        @PathVariable("hash") final String hash
     ) {
 
         final MessageLogId messageLogId = new MessageLogId(dt, hash);
