@@ -10,6 +10,9 @@ dependencies {
     // Redis
     testImplementation 'io.lettuce:lettuce-core'
 
+    // Apache Commons
+    implementation 'org.apache.commons:commons-collections4'
+
     // Utilities
     implementation 'com.github.spullara.mustache.java:compiler'
 }

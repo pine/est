@@ -27,6 +27,9 @@ dependencies {
     // Redis
     implementation 'io.lettuce:lettuce-core'
 
+    // Apache Commons
+    implementation 'org.apache.commons:commons-collections4'
+
     // Utilities
     implementation 'com.github.spullara.mustache.java:compiler'
     implementation 'moe.pine:heroku-addons'

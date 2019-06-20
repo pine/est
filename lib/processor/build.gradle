@@ -1,4 +1,7 @@
 dependencies {
     // Sub-projects
     implementation project(':lib-email')
+
+    // Apache Commons
+    implementation 'org.apache.commons:commons-collections4'
 }

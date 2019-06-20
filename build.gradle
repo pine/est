@@ -96,7 +96,6 @@ subprojects {
         // Utilities
         implementation 'com.google.guava:guava'
         implementation 'org.apache.commons:commons-lang3'
-        implementation 'org.apache.commons:commons-collections4'
 
         // Test
         testImplementation 'junit:junit'

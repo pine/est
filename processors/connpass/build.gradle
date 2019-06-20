@@ -7,6 +7,9 @@ dependencies {
     // Spring Framework
     implementation 'org.springframework:spring-context'
 
+    // Apache Commons
+    implementation 'org.apache.commons:commons-collections4'
+
     // Utilities
     implementation 'com.github.spullara.mustache.java:compiler'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
