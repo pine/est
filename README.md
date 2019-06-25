@@ -20,9 +20,16 @@
 $ ./gradlew :app:bootRun
 ```
 
-## Development
+# Development
+##  JDK
+JDK 11 is required.
+
+Please install Java by Homebrew if you use macOS.
 
 ```
+$ brew tap adoptopenjdk/openjdk
+$ brew cask install adoptopenjdk11
+
 $ java -version
 openjdk version "11.0.2" 2019-01-15
 OpenJDK Runtime Environment AdoptOpenJDK (build 11.0.2+9)
