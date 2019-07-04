@@ -1,25 +1,30 @@
 package moe.pine.est.slack;
 
-import lombok.RequiredArgsConstructor;
 import moe.pine.est.slack.models.SlackMessage;
 import moe.pine.est.slack.models.Status;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Duration;
 import java.util.Objects;
 
-@Component
-@RequiredArgsConstructor
 public class Slack {
-    @SuppressWarnings("WeakerAccess")
-    public static final String SLACK_CHAT_POST_MESSAGE = "https://slack.com/api/chat.postMessage";
+    static final Duration TIMEOUT = Duration.ofSeconds(60);
+    static final String SLACK_CHAT_POST_MESSAGE = "https://slack.com/api/chat.postMessage";
 
     private final RestTemplate restTemplate;
+
+    public Slack(final RestTemplateBuilder restTemplateBuilder) {
+        restTemplate = restTemplateBuilder
+            .setConnectTimeout(TIMEOUT)
+            .setReadTimeout(TIMEOUT)
+            .build();
+    }
 
     public void postMessage(
         final SlackMessage message
