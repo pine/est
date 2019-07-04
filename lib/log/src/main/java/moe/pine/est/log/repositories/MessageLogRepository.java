@@ -120,7 +120,9 @@ public class MessageLogRepository {
     public MessageLog get(
         final MessageLogId id
     ) throws IOException {
-        final var ids = Collections.singletonList(checkNotNull(id));
+        Objects.requireNonNull(id);
+        
+        final var ids = List.of(id);
         final var messageLogs = mget(ids);
         return messageLogs.isEmpty() ? null : messageLogs.get(0).getValue();
     }
