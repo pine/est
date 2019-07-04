@@ -2,21 +2,19 @@ package moe.pine.est.log.utils;
 
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Component
 public class TimeoutCalculator {
-    @Nonnull
     private final Clock clock;
 
-    public TimeoutCalculator(@Nonnull final Clock clock) {
-        this.clock = checkNotNull(clock);
+    public TimeoutCalculator(final Clock clock) {
+        this.clock = Objects.requireNonNull(clock);
     }
 
     public long calc(int retentionDays) {
