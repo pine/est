@@ -1,3 +1,7 @@
 dependencies {
+    // Spring Framework
+    implementation 'org.springframework:spring-core'
+
+    // Utilities
     implementation 'com.sangupta:murmur'
 }
