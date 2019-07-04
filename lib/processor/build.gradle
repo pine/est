@@ -2,6 +2,9 @@ dependencies {
     // Sub-projects
     implementation project(':lib-email')
 
+    // Spring Framework
+    implementation 'org.springframework:spring-core'
+
     // Apache Commons
     implementation 'org.apache.commons:commons-collections4'
 }
