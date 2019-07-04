@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,24 +63,24 @@ public class MessageLogRepositoryTest extends TestBase {
         objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
 
         messageLogRepository = new MessageLogRepository(
-                redisTemplate,
-                objectMapper,
-                murmur3,
-                timeoutCalculator,
-                messageLogKeyBuilder,
-                RETENTION_DAYS
+            redisTemplate,
+            objectMapper,
+            murmur3,
+            timeoutCalculator,
+            messageLogKeyBuilder,
+            RETENTION_DAYS
         );
     }
 
     @Test
     public void constructorTest() {
         new MessageLogRepository(
-                redisTemplate,
-                objectMapper,
-                murmur3,
-                timeoutCalculator,
-                messageLogKeyBuilder,
-                RETENTION_DAYS
+            redisTemplate,
+            objectMapper,
+            murmur3,
+            timeoutCalculator,
+            messageLogKeyBuilder,
+            RETENTION_DAYS
         );
     }
 
@@ -89,12 +90,12 @@ public class MessageLogRepositoryTest extends TestBase {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-                null,
-                objectMapper,
-                murmur3,
-                timeoutCalculator,
-                messageLogKeyBuilder,
-                RETENTION_DAYS
+            null,
+            objectMapper,
+            murmur3,
+            timeoutCalculator,
+            messageLogKeyBuilder,
+            RETENTION_DAYS
         );
     }
 
@@ -104,12 +105,12 @@ public class MessageLogRepositoryTest extends TestBase {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-                redisTemplate,
-                null,
-                murmur3,
-                timeoutCalculator,
-                messageLogKeyBuilder,
-                RETENTION_DAYS
+            redisTemplate,
+            null,
+            murmur3,
+            timeoutCalculator,
+            messageLogKeyBuilder,
+            RETENTION_DAYS
         );
     }
 
@@ -119,12 +120,12 @@ public class MessageLogRepositoryTest extends TestBase {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-                redisTemplate,
-                objectMapper,
-                null,
-                timeoutCalculator,
-                messageLogKeyBuilder,
-                RETENTION_DAYS
+            redisTemplate,
+            objectMapper,
+            null,
+            timeoutCalculator,
+            messageLogKeyBuilder,
+            RETENTION_DAYS
         );
     }
 
@@ -134,12 +135,12 @@ public class MessageLogRepositoryTest extends TestBase {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-                redisTemplate,
-                objectMapper,
-                murmur3,
-                null,
-                messageLogKeyBuilder,
-                RETENTION_DAYS
+            redisTemplate,
+            objectMapper,
+            murmur3,
+            null,
+            messageLogKeyBuilder,
+            RETENTION_DAYS
         );
     }
 
@@ -149,12 +150,12 @@ public class MessageLogRepositoryTest extends TestBase {
         expectedException.expect(NullPointerException.class);
 
         new MessageLogRepository(
-                redisTemplate,
-                objectMapper,
-                murmur3,
-                timeoutCalculator,
-                null,
-                RETENTION_DAYS
+            redisTemplate,
+            objectMapper,
+            murmur3,
+            timeoutCalculator,
+            null,
+            RETENTION_DAYS
         );
     }
 
@@ -163,12 +164,12 @@ public class MessageLogRepositoryTest extends TestBase {
         expectedException.expect(IllegalArgumentException.class);
 
         new MessageLogRepository(
-                redisTemplate,
-                objectMapper,
-                murmur3,
-                timeoutCalculator,
-                messageLogKeyBuilder,
-                ILLEGAL_RETENTION_DAYS
+            redisTemplate,
+            objectMapper,
+            murmur3,
+            timeoutCalculator,
+            messageLogKeyBuilder,
+            ILLEGAL_RETENTION_DAYS
         );
     }
 
@@ -195,8 +196,8 @@ public class MessageLogRepositoryTest extends TestBase {
 
         when(messageLogKeyBuilder.formattedDt()).thenReturn(dt);
         when(murmur3.hash128(anyString()))
-                .thenReturn(hash1)
-                .thenReturn(hash2);
+            .thenReturn(hash1)
+            .thenReturn(hash2);
         when(messageLogKeyBuilder.buildListKey(dt)).thenReturn(listKey);
         when(messageLogKeyBuilder.buildItemKey(dt, hash1)).thenReturn(itemKey1);
         when(messageLogKeyBuilder.buildItemKey(dt, hash2)).thenReturn(itemKey2);
@@ -209,8 +210,8 @@ public class MessageLogRepositoryTest extends TestBase {
         assertTrue(redisTemplate.hasKey(listKey));
         assertTrue(redisTemplate.hasKey(itemKey1));
         assertEquals(
-                Collections.singletonList(hash1),
-                redisTemplate.opsForList().range(listKey, 0, 10));
+            Collections.singletonList(hash1),
+            redisTemplate.opsForList().range(listKey, 0, 10));
 
         final MessageLogId messageLogId2 = messageLogRepository.add(messageLog2);
         assertEquals(dt, messageLogId2.getDt());
@@ -218,8 +219,8 @@ public class MessageLogRepositoryTest extends TestBase {
 
         assertTrue(redisTemplate.hasKey(itemKey2));
         assertEquals(
-                List.of(hash2, hash1),
-                redisTemplate.opsForList().range(listKey, 0, 10));
+            List.of(hash2, hash1),
+            redisTemplate.opsForList().range(listKey, 0, 10));
 
         final MessageLog savedMessageLog1 = messageLogRepository.get(messageLogId1);
         assertNull(savedMessageLog1.getSender());
@@ -255,19 +256,19 @@ public class MessageLogRepositoryTest extends TestBase {
         final String itemKey2 = "message:" + dt2 + ":" + hash2;
 
         when(messageLogKeyBuilder.formattedDt())
-                .thenReturn(dt1)
-                .thenReturn(dt2)
-                .thenReturn(dt2);
+            .thenReturn(dt1)
+            .thenReturn(dt2)
+            .thenReturn(dt2);
         when(murmur3.hash128(anyString()))
-                .thenReturn(hash1)
-                .thenReturn(hash2)
-                .thenReturn(hash2);
+            .thenReturn(hash1)
+            .thenReturn(hash2)
+            .thenReturn(hash2);
         when(messageLogKeyBuilder.buildListKey(dt1)).thenReturn(listKey1);
         when(messageLogKeyBuilder.buildListKey(dt2)).thenReturn(listKey2);
         when(messageLogKeyBuilder.buildItemKey(dt1, hash1)).thenReturn(itemKey1);
         when(messageLogKeyBuilder.buildItemKey(dt2, hash2)).thenReturn(itemKey2);
         when(messageLogKeyBuilder.buildListKeys())
-                .thenReturn(List.of(listKey1, listKey2));
+            .thenReturn(List.of(listKey1, listKey2));
         when(timeoutCalculator.calc(RETENTION_DAYS)).thenReturn(10L);
 
         assertEquals(0, messageLogRepository.count());
@@ -293,45 +294,45 @@ public class MessageLogRepositoryTest extends TestBase {
         final String listKey2 = "message:" + dt2;
 
         when(messageLogKeyBuilder.buildListKeys())
-                .thenReturn(List.of(listKey2, listKey1));
+            .thenReturn(List.of(listKey2, listKey1));
         when(messageLogKeyBuilder.parseListKey(listKey1))
-                .thenReturn(new MessageLogId(dt1, null));
+            .thenReturn(new MessageLogId(dt1, null));
         when(messageLogKeyBuilder.parseListKey(listKey2))
-                .thenReturn(new MessageLogId(dt2, null));
+            .thenReturn(new MessageLogId(dt2, null));
 
         assertEquals(
-                Collections.emptyList(),
-                messageLogRepository.getIds(0, 10));
+            Collections.emptyList(),
+            messageLogRepository.getIds(0, 10));
 
         redisTemplate.opsForList().leftPush(listKey1, hash1);
 
         assertEquals(
-                List.of(new MessageLogId(dt1, hash1)),
-                messageLogRepository.getIds(0, 10));
+            List.of(new MessageLogId(dt1, hash1)),
+            messageLogRepository.getIds(0, 10));
 
         redisTemplate.opsForList().leftPush(listKey1, hash2);
         redisTemplate.opsForList().leftPush(listKey2, hash3);
 
         assertEquals(
-                List.of(new MessageLogId(dt2, hash3)),
-                messageLogRepository.getIds(0, 1));
+            List.of(new MessageLogId(dt2, hash3)),
+            messageLogRepository.getIds(0, 1));
         assertEquals(
-                List.of(
-                        new MessageLogId(dt2, hash3),
-                        new MessageLogId(dt1, hash2),
-                        new MessageLogId(dt1, hash1)),
-                messageLogRepository.getIds(0, 10));
+            List.of(
+                new MessageLogId(dt2, hash3),
+                new MessageLogId(dt1, hash2),
+                new MessageLogId(dt1, hash1)),
+            messageLogRepository.getIds(0, 10));
         assertEquals(
-                List.of(
-                        new MessageLogId(dt1, hash2),
-                        new MessageLogId(dt1, hash1)),
-                messageLogRepository.getIds(1, 10));
+            List.of(
+                new MessageLogId(dt1, hash2),
+                new MessageLogId(dt1, hash1)),
+            messageLogRepository.getIds(1, 10));
         assertEquals(
-                List.of(new MessageLogId(dt1, hash2)),
-                messageLogRepository.getIds(1, 1));
+            List.of(new MessageLogId(dt1, hash2)),
+            messageLogRepository.getIds(1, 1));
         assertEquals(
-                Collections.emptyList(),
-                messageLogRepository.getIds(3, 10));
+            Collections.emptyList(),
+            messageLogRepository.getIds(3, 10));
     }
 
     @Test
@@ -385,11 +386,11 @@ public class MessageLogRepositoryTest extends TestBase {
         final String dummyItemKey = "message:" + dt1 + ":" + dummyHash;
 
         when(messageLogKeyBuilder.formattedDt())
-                .thenReturn(dt1)
-                .thenReturn(dt2);
+            .thenReturn(dt1)
+            .thenReturn(dt2);
         when(murmur3.hash128(anyString()))
-                .thenReturn(hash1)
-                .thenReturn(hash2);
+            .thenReturn(hash1)
+            .thenReturn(hash2);
         when(messageLogKeyBuilder.buildListKey(dt1)).thenReturn(listKey1);
         when(messageLogKeyBuilder.buildListKey(dt2)).thenReturn(listKey2);
         when(messageLogKeyBuilder.buildItemKey(dt1, hash1)).thenReturn(itemKey1);
@@ -410,13 +411,13 @@ public class MessageLogRepositoryTest extends TestBase {
         final var messageLogId2 = new MessageLogId(dt2, hash2);
         final var dummyMessageLogId = new MessageLogId(dt1, dummyHash);
         final var messageLogIds =
-                List.of(
-                        messageLogId1,
-                        messageLogId2,
-                        dummyMessageLogId);
+            List.of(
+                messageLogId1,
+                messageLogId2,
+                dummyMessageLogId);
 
         final List<Pair<MessageLogId, MessageLog>> savedMessageLogs =
-                messageLogRepository.mget(messageLogIds);
+            messageLogRepository.mget(messageLogIds);
 
         assertEquals(2, savedMessageLogs.size());
         assertEquals(messageLogId1, savedMessageLogs.get(0).getKey());
@@ -428,7 +429,7 @@ public class MessageLogRepositoryTest extends TestBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("ConstantConditions")
-    public void mgetTest_illegalIds() {
+    public void mgetTest_nullIds() {
         expectedException.expect(NullPointerException.class);
         messageLogRepository.mget(null);
     }
@@ -437,7 +438,37 @@ public class MessageLogRepositoryTest extends TestBase {
     @SneakyThrows
     public void mgetTest_emptyIds() {
         assertEquals(
-                Collections.emptyList(),
-                messageLogRepository.mget(Collections.emptyList()));
+            Collections.emptyList(),
+            messageLogRepository.mget(Collections.emptyList()));
+    }
+
+    @Test
+    @SneakyThrows
+    public void mgetTest_containsIllegalId() {
+        expectedException.expect(IllegalArgumentException.class);
+
+        final var messageLogId1 =
+            new MessageLogId("20190502", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        final var messageLogId2 =
+            new MessageLogId("20190502", null);
+        final List<MessageLogId> messageLogIds = List.of(messageLogId1, messageLogId2);
+
+        messageLogRepository.mget(messageLogIds);
+    }
+
+    @Test
+    @SneakyThrows
+    public void mgetTest_containsNull() {
+        expectedException.expect(NullPointerException.class);
+
+        final var messageLogId =
+            new MessageLogId("20190502", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        final List<MessageLogId> messageLogIds =
+            new ArrayList<>() {{
+                add(messageLogId);
+                add(null);
+            }};
+
+        messageLogRepository.mget(messageLogIds);
     }
 }

@@ -57,7 +57,7 @@ public class NotifyRequestLogRepository {
         }
 
         final String item = objectMapper.writeValueAsString(notifyRequestLogs);
-        final String itemsKey = buildKey(messageLogId.getDt(), messageLogId.getHash());
+        final String itemsKey = buildKey(messageLogId);
         final long timeout = timeoutCalculator.calc(retentionDays);
 
         redisTemplate.opsForValue().set(itemsKey, item, timeout, TimeUnit.SECONDS);
@@ -66,12 +66,15 @@ public class NotifyRequestLogRepository {
 
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
-    String buildKey(
-        final String dt,
-        final String hash
-    ) {
-        Objects.requireNonNull(dt);
-        Objects.requireNonNull(hash);
+    String buildKey(final MessageLogId id) {
+        Objects.requireNonNull(id);
+
+        final String dt = id.getDt();
+        final String hash = id.getHash();
+        if (hash == null) {
+            throw new IllegalArgumentException(
+                String.format("`MessageLogId#hash` should not be empty. :: id = %s", id));
+        }
 
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt, HASH_KEY, hash);

@@ -136,8 +136,14 @@ public class MessageLogRepository {
         }
 
         final List<String> keys = ids.stream()
-            .filter(Objects::nonNull)
-            .map(id -> keyBuilder.buildItemKey(id.getDt(), id.getHash()))
+            .map(Objects::requireNonNull)
+            .map(id -> {
+                if (id.getHash() == null) {
+                    throw new IllegalArgumentException(
+                        String.format("`MessageLogId#hash` should not be empty. :: id = %s", id));
+                }
+                return keyBuilder.buildItemKey(id.getDt(), id.getHash());
+            })
             .collect(Collectors.toUnmodifiableList());
 
         final List<String> values = redisTemplate.opsForValue().multiGet(keys);
