@@ -13,13 +13,11 @@ import moe.pine.est.log.utils.TimeoutCalculator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.annotation.Nonnull;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 public class NotifyRequestLogRepository {
@@ -34,26 +32,25 @@ public class NotifyRequestLogRepository {
     private final int retentionDays;
 
     public NotifyRequestLogRepository(
-            final RedisTemplate<String, String> redisTemplate,
-            final ObjectMapper objectMapper,
-            final MustacheFactory mustacheFactory,
-            final TimeoutCalculator timeoutCalculator,
-            final int retentionDays
+        final RedisTemplate<String, String> redisTemplate,
+        final ObjectMapper objectMapper,
+        final MustacheFactory mustacheFactory,
+        final TimeoutCalculator timeoutCalculator,
+        final int retentionDays
     ) {
-        this.redisTemplate = checkNotNull(redisTemplate);
-        this.objectMapper = checkNotNull(objectMapper);
+        this.redisTemplate = Objects.requireNonNull(redisTemplate);
+        this.objectMapper = Objects.requireNonNull(objectMapper);
         this.itemsKeyFormat = mustacheFactory.compile(new StringReader(ITEMS_KEY_FORMAT), "");
-        this.timeoutCalculator = checkNotNull(timeoutCalculator);
+        this.timeoutCalculator = Objects.requireNonNull(timeoutCalculator);
         this.retentionDays = retentionDays;
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void add(
-            @Nonnull MessageLogId messageLogId,
-            @Nonnull List<NotifyRequestLog> notifyRequestLogs
+        MessageLogId messageLogId,
+        List<NotifyRequestLog> notifyRequestLogs
     ) throws JsonProcessingException {
-        checkNotNull(messageLogId);
-        checkNotNull(notifyRequestLogs);
+        Objects.requireNonNull(messageLogId);
+        Objects.requireNonNull(notifyRequestLogs);
 
         if (CollectionUtils.isEmpty(notifyRequestLogs)) {
             return;
@@ -70,9 +67,12 @@ public class NotifyRequestLogRepository {
     @SuppressWarnings("WeakerAccess")
     @VisibleForTesting
     String buildKey(
-            final String dt,
-            final String hash
+        final String dt,
+        final String hash
     ) {
+        Objects.requireNonNull(dt);
+        Objects.requireNonNull(hash);
+
         final var writer = new StringWriter();
         final var scopes = ImmutableMap.of(DT_KEY, dt, HASH_KEY, hash);
         itemsKeyFormat.execute(writer, scopes);
